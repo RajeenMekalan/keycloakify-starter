@@ -69,6 +69,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                         social.providers && [getClassName("kcFormSocialAccountContentClass"), getClassName("kcFormSocialAccountClass")]
                     )}
                 >
+                <span >Sample test new</span>
                     {realm.password && (
                         <form id="kc-form-login" onSubmit={onSubmit} action={url.loginAction} method="post">
                             <div className={getClassName("kcFormGroupClass")}>
