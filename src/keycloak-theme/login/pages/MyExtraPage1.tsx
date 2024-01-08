@@ -13,7 +13,8 @@ export default function MyExtraPage1(props: PageProps<Extract<KcContext, { pageI
             infoNode={<span>footer</span>}
         >
             <form>
-                {/*...*/}
+              <span>test</span>
+              <button>test button</button>
             </form>
         </Template>
     );
