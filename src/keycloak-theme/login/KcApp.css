@@ -4,13 +4,56 @@
 }
 
 .my-font {
-	font-family: 'Work Sans';
+	font-family: 'DaytonaPro-Light';
 }
 
 .my-root-class {
 	background: white;
 }
 
+.kcFormCardClass{
+	background: #FFFFFF;
+	margin-left: 100px;
+	padding: 50px;
+}
+
+.kcLoginClass {
+	padding-top: 120px;
+}
+
 .my-root-class body {
-	background: gainsboro;
+	background: url(./assets/backgrounding.jpg) no-repeat center center fixed;
+}
+.left-side,
+.right-side {
+    flex: 1;
+}
+
+.middle-container {
+    position: absolute;
+    top: 120px;
+    left: 300px;
+    right: 10px;
+    max-width: calc(100% - 620px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+}
+
+.separator::before,
+.separator::after {
+    content: ' ';
+    flex: 1;
+    border-bottom: 1px solid #ccc; /* Adjust line color */
+}
+
+.separator span {
+    margin: 0 10px; /* Adjust spacing as needed */
 }

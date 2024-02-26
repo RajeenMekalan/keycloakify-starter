@@ -46,30 +46,19 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
             displayInfo={social.displayInfo}
             displayWide={realm.password && social.providers !== undefined}
             headerNode={msg("doLogIn")}
-            infoNode={
-                realm.password &&
-                realm.registrationAllowed &&
-                !registrationDisabled && (
-                    <div id="kc-registration">
-                        <span>
-                            {msg("noAccount")}
-                            <a tabIndex={6} href={url.registrationUrl}>
-                                {msg("doRegister")}
-                            </a>
-                        </span>
-                    </div>
-                )
-            }
+            
         >
+            <div>
+                <img src="" style={{ width: '150px', height: '30px', marginRight: '10px',  marginBottom: '20px'  }} />
+                <div style={{ fontFamily: 'DaytonaPro-Light', fontWeight: 400, fontSize: '25px', lineHeight: '40px', color: '#253053', textAlign: 'left',marginBottom: '20px' }}>
+                    Sign - In To Rise HR
+                </div>
+            </div>
             <div id="kc-form" className={clsx(realm.password && social.providers !== undefined && getClassName("kcContentWrapperClass"))}>
                 <div
                     id="kc-form-wrapper"
-                    className={clsx(
-                        realm.password &&
-                        social.providers && [getClassName("kcFormSocialAccountContentClass"), getClassName("kcFormSocialAccountClass")]
-                    )}
                 >
-                <span >sample demo</span>
+
                     {realm.password && (
                         <form id="kc-form-login" onSubmit={onSubmit} action={url.loginAction} method="post">
                             <div className={getClassName("kcFormGroupClass")}>
@@ -86,7 +75,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                         return (
                                             <>
                                                 <label htmlFor={autoCompleteHelper} className={getClassName("kcLabelClass")}>
-                                                    {msg(label)}
+                                                 Email Address
                                                 </label>
                                                 <input
                                                     tabIndex={1}
@@ -107,7 +96,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                             </div>
                             <div className={getClassName("kcFormGroupClass")}>
                                 <label htmlFor="password" className={getClassName("kcLabelClass")}>
-                                    {msg("password")}
+                                    Confirm Password
                                 </label>
                                 <input
                                     tabIndex={2}
@@ -138,16 +127,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                             </label>
                                         </div>
                                     )}
-                                </div>
-                                <div className={getClassName("kcFormOptionsWrapperClass")}>
-                                    {realm.resetPasswordAllowed && (
-                                        <span>
-                                            <a tabIndex={5} href={url.loginResetCredentialsUrl}>
-                                                {msg("doForgotPassword")}
-                                            </a>
-                                        </span>
-                                    )}
-                                </div>
+                                </div>                               
                             </div>
                             <div id="kc-form-buttons" className={getClassName("kcFormGroupClass")}>
                                 <input
@@ -175,30 +155,48 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                     disabled={isLoginButtonDisabled}
                                 />
                             </div>
+                            <div className={getClassName("kcFormGroupClass")} style={{ textAlign: 'center' }}>
+                                <div className={getClassName("kcFormOptionsWrapperClass")}>
+                                    {realm.resetPasswordAllowed && (
+                                        <span>
+                                            <a tabIndex={5} href={url.loginResetCredentialsUrl}>
+                                                Forgot Password?
+                                            </a>
+                                        </span>
+                                    )}
+                                </div>
+                            </div>
+                            <div className={getClassName("kcFormGroupClass")}>
+                                <div className="separator">
+                                    <span>or continue with</span>
+                                </div>
+                            </div>
+                            <div className={getClassName("kcFormGroupClass")}>
+                                {realm.password && social.providers !== undefined && (
+                                    <div
+                                        id="kc-social-providers"                                       
+                                    >
+                                        <ul
+                                            className={clsx(
+                                                getClassName("kcFormSocialAccountListClass"),
+                                                social.providers.length > 4 && getClassName("kcFormSocialAccountDoubleListClass")
+                                            )}
+                                        >
+                                            {social.providers.map(p => (
+                                                <li key={p.providerId} className={getClassName("kcFormSocialAccountListLinkClass")}>
+                                                    <a href={p.loginUrl} id={`zocial-${p.alias}`} className={clsx("zocial", p.providerId)}>
+                                                        <span>{p.displayName}</span>
+                                                    </a>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                )}
+                            </div>
+                            
                         </form>
                     )}
                 </div>
-                {realm.password && social.providers !== undefined && (
-                    <div
-                        id="kc-social-providers"
-                        className={clsx(getClassName("kcFormSocialAccountContentClass"), getClassName("kcFormSocialAccountClass"))}
-                    >
-                        <ul
-                            className={clsx(
-                                getClassName("kcFormSocialAccountListClass"),
-                                social.providers.length > 4 && getClassName("kcFormSocialAccountDoubleListClass")
-                            )}
-                        >
-                            {social.providers.map(p => (
-                                <li key={p.providerId} className={getClassName("kcFormSocialAccountListLinkClass")}>
-                                    <a href={p.loginUrl} id={`zocial-${p.alias}`} className={clsx("zocial", p.providerId)}>
-                                        <span>{p.displayName}</span>
-                                    </a>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                )}
             </div>
         </Template>
     );
