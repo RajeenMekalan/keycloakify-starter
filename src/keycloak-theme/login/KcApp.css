@@ -46,6 +46,7 @@
     align-items: center;
     text-align: center;
     width: 100%;
+	margin-top: 30px;
 }
 
 .separator::before,
@@ -67,3 +68,38 @@
     content: none;
 }
 
+.floating-label-group {
+	position: relative;
+	margin-top: 15px;
+	margin-bottom: 25px;
+
+	.floating-label {
+		font-size: 13px;
+		color: #cccccc;
+		position: absolute;
+		pointer-events: none;
+		top: 9px;
+		left: 0px;
+		transition: all 0.1s ease;
+	}
+
+	input:focus ~ .floating-label {
+		top: -15px;
+		bottom: 0px;
+		left: 0px;
+		font-size: 11px;
+		opacity: 1;
+		color: #404040;
+	}
+}
+
+.form-control {
+    border: none;
+    border-bottom: 1px solid #cbcbcb;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+*:focus {
+    outline: none;
+}
