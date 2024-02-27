@@ -79,7 +79,7 @@ export const WithSocialProviders: ComponentStory<typeof PageStory> = () => (
             social: {
                 displayInfo: true, providers: [
                    
-                    { loginUrl: 'microsoft', alias: 'microsoft', providerId: 'microsoft', displayName: 'Microsoft' }
+                    { loginUrl: 'microsoft', alias: 'microsoft', providerId: 'microsoft', displayName: 'Sign In with Microsoft' }
                    
 
                 ]

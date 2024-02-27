@@ -8,6 +8,11 @@ import { useGetClassName } from "keycloakify/login/lib/useGetClassName";
 import type { KcContext } from "./kcContext";
 import type { I18n } from "./i18n";
 import login from "./assets/login.svg";
+import twitter from "./assets/twitter.svg";
+import linkedIn from "./assets/linkedin.svg";
+import facebook from "./assets/facebook.svg";
+import youtube from "./assets/youtube.svg";
+import vimeo from "./assets/vimeo.svg";
 
 export default function Template(props: TemplateProps<KcContext, I18n>) {
     const {
@@ -56,18 +61,18 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                 <div className="left-side">
                     <div style={{ width: '520px', height: '500px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
 
-                        <div style={{ fontFamily: 'DaytonaPro-Light', fontWeight: 400, fontSize: '48px', lineHeight: '48px', color: '#253053', textAlign: 'center' }}>
+                        <div style={{ fontWeight: 400, fontSize: '48px', lineHeight: '48px', color: '#253053', textAlign: 'center' }}>
                             Welcome Back!
                         </div>
 
                         <img src={login} style={{ width: '400px', height: '400px' }} />
 
-                        <div style={{ fontFamily: 'DaytonaPro-Regular', fontWeight: 400, fontSize: '16px', lineHeight: '20.77px', textAlign: 'center' }}>
+                        <div style={{ fontWeight: 400, fontSize: '14px', lineHeight: '20.77px', textAlign: 'center' }}>
                             Lorem ipsum dolor sit amet, cons elit.
                         </div>
 
                         {/* Second label with specified styles */}
-                        <div style={{ fontFamily: 'DaytonaPro-Regular', fontWeight: 400, fontSize: '16px', lineHeight: '20.77px', textAlign: 'center', marginTop: '10px' }}>
+                        <div style={{ fontWeight: 400, fontSize: '14px', lineHeight: '20.77px', textAlign: 'center', marginTop: '10px' }}>
                             Lorem ipsum dolor sit amet, cons elit.
                         </div>
                     </div>
@@ -133,6 +138,21 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            {/* Footer */}
+            <div style={{ position: 'absolute', bottom: '0', width: '100%', textAlign: 'center', paddingBottom: '20px' }}>
+                <div style={{ textAlign: 'center', marginTop: '10px' }}>
+                    <img src={twitter} alt="Twitter" style={{ width: '20px', height: '20px', margin: '0 5px' }} />
+                    <img src={facebook} alt="Twitter" style={{ width: '20px', height: '20px', margin: '0 5px' }} />
+                    <img src={vimeo} alt="Twitter" style={{ width: '20px', height: '20px', margin: '0 5px' }} />
+                    <img src={linkedIn} alt="Twitter" style={{ width: '20px', height: '20px', margin: '0 5px' }} />
+                    <img src={youtube} alt="Twitter" style={{ width: '20px', height: '20px', margin: '0 5px' }} />
+                </div>
+
+                <div style={{ textAlign: 'center', marginTop: '20px', fontSize:'12px',color:'#ffffff',fontWeight:'400' }}>
+                    Copyright © 2023 Rise HR Software (Pvt) Ltd. All Rights Reserved.
                 </div>
             </div>
         </div>

@@ -4,7 +4,7 @@
 }
 
 .my-font {
-	font-family: 'DaytonaPro-Light';
+	font-family: 'DaytonaProLight';
 }
 
 .my-root-class {
@@ -52,9 +52,18 @@
 .separator::after {
     content: ' ';
     flex: 1;
-    border-bottom: 1px solid #ccc; /* Adjust line color */
+    border-bottom: 1px solid #ccc;
 }
 
 .separator span {
-    margin: 0 10px; /* Adjust spacing as needed */
+    margin: 0 10px;
 }
+
+.zocial:before{
+    float: none;
+}
+
+.zocial.microsoft:before {
+    content: none;
+}
+

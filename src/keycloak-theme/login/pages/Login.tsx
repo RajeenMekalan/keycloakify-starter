@@ -6,6 +6,7 @@ import { useGetClassName } from "keycloakify/login/lib/useGetClassName";
 import type { KcContext } from "../kcContext";
 import type { I18n } from "../i18n";
 import logo from "../assets/logo.png"
+import microsoft from "../assets/microsoft.svg";
 
 const my_custom_param= new URL(window.location.href).searchParams.get("my_custom_param");
 
@@ -49,16 +50,18 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
             headerNode={msg("doLogIn")}
             
         >
-            <div>
-                <img src={logo} style={{ width: '150px', height: '30px', marginRight: '10px',  marginBottom: '20px'  }} />
-                <div style={{ fontFamily: 'DaytonaPro-Light', fontWeight: 400, fontSize: '25px', lineHeight: '40px', color: '#253053', textAlign: 'left',marginBottom: '20px' }}>
-                    Sign - In To Rise HR
-                </div>
-            </div>
+
+          
             <div id="kc-form" className={clsx(realm.password && social.providers !== undefined && getClassName("kcContentWrapperClass"))}>
                 <div
                     id="kc-form-wrapper"
                 >
+                    <div>
+                        <img src={logo} style={{ width: '150px', height: '30px', marginRight: '10px', marginBottom: '20px' }} />
+                        <div style={{ fontWeight: 400, fontSize: '25px', lineHeight: '40px', color: '#253053', textAlign: 'left', marginBottom: '20px' }}>
+                            Sign - In To Rise HR
+                        </div>
+                    </div>
 
                     {realm.password && (
                         <form id="kc-form-login" onSubmit={onSubmit} action={url.loginAction} method="post">
@@ -123,8 +126,9 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                                             "checked": true
                                                         }
                                                         : {})}
+                                                        style={{borderRadius:'4px'}}
                                                 />
-                                                {msg("rememberMe")}
+                                                <span style={{fontSize:'14px',color:'#5E6067'}}> {msg("rememberMe")} </span>
                                             </label>
                                         </div>
                                     )}
@@ -145,22 +149,23 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                     tabIndex={4}
                                     className={clsx(
                                         getClassName("kcButtonClass"),
-                                        getClassName("kcButtonPrimaryClass"),
+                                        // getClassName("kcButtonPrimaryClass"),
                                         getClassName("kcButtonBlockClass"),
                                         getClassName("kcButtonLargeClass")
                                     )}
                                     name="login"
                                     id="kc-login"
                                     type="submit"
-                                    value={msgStr("doLogIn")}
+                                    value={"Sign - In"}
                                     disabled={isLoginButtonDisabled}
+                                    style={{backgroundColor:'#2C82F9', borderRadius:'6px', color:'#FFFFFF'}}
                                 />
                             </div>
                             <div className={getClassName("kcFormGroupClass")} style={{ textAlign: 'center' }}>
                                 <div className={getClassName("kcFormOptionsWrapperClass")}>
                                     {realm.resetPasswordAllowed && (
                                         <span>
-                                            <a tabIndex={5} href={url.loginResetCredentialsUrl}>
+                                            <a tabIndex={5} href={url.loginResetCredentialsUrl} style={{fontSize:'14px', color:'#2C82F9', fontWeight:'400'}}>
                                                 Forgot Password?
                                             </a>
                                         </span>
@@ -169,7 +174,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                             </div>
                             <div className={getClassName("kcFormGroupClass")}>
                                 <div className="separator">
-                                    <span>or continue with</span>
+                                    <span style={{fontSize:'14px', color:'#8C8C8C'}}>or continue with:</span>
                                 </div>
                             </div>
                             <div className={getClassName("kcFormGroupClass")}>
@@ -185,7 +190,8 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                         >
                                             {social.providers.map(p => (
                                                 <li key={p.providerId} className={getClassName("kcFormSocialAccountListLinkClass")}>
-                                                    <a href={p.loginUrl} id={`zocial-${p.alias}`} className={clsx("zocial", p.providerId)}>
+                                                    <a href={p.loginUrl} id={`zocial-${p.alias}`} className={clsx("zocial", p.providerId)} style={{ borderRadius: '6px', fontSize: '14px', border: '1px solid #1E24323B', background: '#FFFFFF', color: '#253053' }} >
+                                                        <img src={microsoft} style={{ width: '20px', height: '20px', marginRight: '5px'}} />
                                                         <span>{p.displayName}</span>
                                                     </a>
                                                 </li>
@@ -199,6 +205,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                     )}
                 </div>
             </div>
+            
         </Template>
     );
 }
