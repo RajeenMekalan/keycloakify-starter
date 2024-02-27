@@ -76,7 +76,7 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
                         style={{ backgroundColor: '#2C82F9', borderRadius: '6px', color: '#FFFFFF' }}
                     />
                 </div>
-                <div className="separator">
+                <div className="separator" style={{ marginTop: '30px'}}>
                     <span style={{ fontSize: '14px', color: '#8C8C8C' }}>or</span>
                 </div>
                 <div id="kc-form-buttons">
