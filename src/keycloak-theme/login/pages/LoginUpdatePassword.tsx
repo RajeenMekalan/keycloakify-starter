@@ -3,6 +3,7 @@ import type { PageProps } from "keycloakify/login/pages/PageProps";
 import { useGetClassName } from "keycloakify/login/lib/useGetClassName";
 import type { KcContext } from "../kcContext";
 import type { I18n } from "../i18n";
+import logo from "../assets/logo.png"
 
 export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, { pageId: "login-update-password.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
@@ -14,13 +15,20 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
 
     const { msg, msgStr } = i18n;
 
-    const { url, messagesPerField, isAppInitiatedAction, username } = kcContext;
+    // const { url, messagesPerField, isAppInitiatedAction, username } = kcContext;
+    const {  realm, url,  auth } = kcContext;
 
     return (
         <Template {...{ kcContext, i18n, doUseDefaultCss, classes }} headerNode={msg("updatePasswordTitle")}>
+             <div>
+                <img src={logo} style={{ width: '150px', height: '30px', marginRight: '10px', marginBottom: '20px' }} />
+                <div style={{ fontWeight: 400, fontSize: '25px', lineHeight: '40px', color: '#253053', textAlign: 'left', marginBottom: '20px' }}>
+                    Set Your Password
+                </div>
+            </div>
 
             <form id="kc-passwd-update-form" className={getClassName("kcFormClass")} action={url.loginAction} method="post">
-                <input
+                {/* <input
                     type="text"
                     id="username"
                     name="username"
@@ -128,6 +136,72 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                                 value={msgStr("doSubmit")}
                             />
                         )}
+                    </div>
+                </div> */}
+
+                <div className={getClassName("kcFormGroupClass")}>
+                    <div className={getClassName("kcLabelWrapperClass")}>
+                        <label htmlFor="newPassowrd" className={getClassName("kcLabelClass")}>
+                            Password
+                        </label>
+                    </div>
+                    <div className={getClassName("kcInputWrapperClass")}>
+                        <input
+                            type="text"
+                            id="Passowrd"
+                            name="Passowrd"
+                            className={getClassName("kcInputClass")}
+                            autoFocus
+                        />
+                    </div>
+                </div>
+                <div id="kc-form-buttons">
+                    <input
+                        className={clsx(
+                            getClassName("kcButtonClass"),
+                            getClassName("kcButtonPrimaryClass"),
+                            getClassName("kcButtonBlockClass"),
+                            getClassName("kcButtonLargeClass")
+                        )}
+                        type="submit"
+                        value="Generate Password"
+                        style={{ borderRadius: '6px', fontSize: '14px', border: '1px solid #1E24323B', background: '#FFFFFF', color: '#2C82F9', fontWeight: '400px', paddingRight: '0px' }}
+                    />
+                </div>
+                <div id="kc-form-buttons">
+                    <input
+                        className={clsx(
+                            getClassName("kcButtonClass"),
+                            // getClassName("kcButtonPrimaryClass"),
+                            getClassName("kcButtonBlockClass"),
+                            getClassName("kcButtonLargeClass")
+                        )}
+                        type="submit"
+                        value="Confirm"
+                        style={{ backgroundColor: '#2C82F9', borderRadius: '6px', color: '#FFFFFF' }}
+                    />
+                </div>
+                <div className="separator" style={{ marginTop: '30px'}}>
+                    <span style={{ fontSize: '14px', color: '#8C8C8C' }}>or</span>
+                </div>
+                {/* <div className={getClassName("kcFormGroupClass")} style={{ textAlign: 'center' }}>
+                    <div className={getClassName("kcFormOptionsWrapperClass")}>
+                        {realm.resetPasswordAllowed && (
+                            <span>
+                                <a tabIndex={5} href={url.loginResetCredentialsUrl} style={{ fontSize: '14px', color: '#2C82F9', fontWeight: '400' }}>
+                                    Forgot Password?
+                                </a>
+                            </span>
+                        )}
+                    </div>
+                </div> */}
+                 <div className={getClassName("kcFormGroupClass")} style={{ textAlign: 'center',marginTop:'20px'  }}>
+                    <div className={getClassName("kcFormOptionsWrapperClass")}>                   
+                            <span>
+                                <a tabIndex={5} style={{ fontSize: '14px', color: '#2C82F9', fontWeight: '400'}}>
+                                    Create Password Manually
+                                </a>
+                            </span>
                     </div>
                 </div>
             </form>

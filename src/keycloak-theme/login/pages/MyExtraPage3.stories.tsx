@@ -2,11 +2,11 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { createPageStory } from "../createPageStory";
 
 const { PageStory } = createPageStory({
-    pageId: "my-extra-page-2.ftl"
+    pageId: "my-extra-page-3.ftl"
 });
 
 export default {
-    title: "login/LoginForgotPassword",
+    title: "login/LoginSetPassword",
     component: PageStory,
 } as ComponentMeta<typeof PageStory>;
 

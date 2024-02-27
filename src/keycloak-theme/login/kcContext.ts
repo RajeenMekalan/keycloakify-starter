@@ -5,6 +5,7 @@ export type KcContextExtension =
 	| { pageId: "login.ftl"; extraThemeProperties: { foo: string; }; }
 	| { pageId: "my-extra-page-1.ftl"; }
 	| { pageId: "my-extra-page-2.ftl"; someCustomValue: string; }
+	| { pageId: "my-extra-page-3.ftl"; someCustomValue: string; }
 	// NOTE: register.ftl is deprecated in favor of register-user-profile.ftl
 	// but let's say we use it anyway and have this plugin enabled: https://github.com/micedre/keycloak-mail-whitelisting
 	// keycloak-mail-whitelisting define the non standard ftl global authorizedMailDomains, we declare it here.
@@ -32,6 +33,10 @@ export const { getKcContext } = createGetKcContext<KcContextExtension>({
 			pageId: "my-extra-page-2.ftl",
 			someCustomValue: "foo bar baz"
 		},
+		// {
+		// 	pageId: "my-extra-page-3.ftl",
+		// 	someCustomValue: "foo bar baz"
+		// },
 		{
 			//NOTE: You will either use register.ftl (legacy) or register-user-profile.ftl, not both
 			pageId: "register-user-profile.ftl",
