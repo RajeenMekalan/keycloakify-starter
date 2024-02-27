@@ -7,6 +7,7 @@ import { type TemplateProps } from "keycloakify/login/TemplateProps";
 import { useGetClassName } from "keycloakify/login/lib/useGetClassName";
 import type { KcContext } from "./kcContext";
 import type { I18n } from "./i18n";
+import login from "./assets/login.svg";
 
 export default function Template(props: TemplateProps<KcContext, I18n>) {
     const {
@@ -53,15 +54,15 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
             <div className="middle-container">
                 {/* Left Side Container */}
                 <div className="left-side">
-                    <div style={{ width: '520px', height: '630px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                    <div style={{ width: '520px', height: '500px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
 
-                        <div style={{ fontFamily: 'DaytonaPro-Light', fontWeight: 400, fontSize: '48px', lineHeight: '61.25px', color: '#253053', textAlign: 'center' }}>
+                        <div style={{ fontFamily: 'DaytonaPro-Light', fontWeight: 400, fontSize: '48px', lineHeight: '48px', color: '#253053', textAlign: 'center' }}>
                             Welcome Back!
                         </div>
 
-                        <img src="./assets/left.svg" style={{ width: '500px', height: '500px' }} />
+                        <img src={login} style={{ width: '400px', height: '400px' }} />
 
-                        <div style={{ fontFamily: 'DaytonaPro-Regular', fontWeight: 400, fontSize: '16px', lineHeight: '20.77px', textAlign: 'center', marginTop: '20px' }}>
+                        <div style={{ fontFamily: 'DaytonaPro-Regular', fontWeight: 400, fontSize: '16px', lineHeight: '20.77px', textAlign: 'center' }}>
                             Lorem ipsum dolor sit amet, cons elit.
                         </div>
 
@@ -74,7 +75,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
 
                 {/* Right Side Container */}
                 <div className="right-side">
-                    <div className={clsx(getClassName("kcFormCardClass"), displayWide && getClassName("kcFormCardAccountClass"))} style={{ width: '520px', height: '630px', borderRadius: '25px' }}>
+                    <div className={clsx(getClassName("kcFormCardClass"), displayWide && getClassName("kcFormCardAccountClass"))} style={{ width: '420px', height: '500px', borderRadius: '25px', marginBottom:'0px'}}>
                         <div id="kc-content">
                             <div id="kc-content-wrapper">
                                 {/* App-initiated actions should not see warning messages about the need to complete the action during login. */}

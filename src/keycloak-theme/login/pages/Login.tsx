@@ -5,6 +5,7 @@ import type { PageProps } from "keycloakify/login/pages/PageProps";
 import { useGetClassName } from "keycloakify/login/lib/useGetClassName";
 import type { KcContext } from "../kcContext";
 import type { I18n } from "../i18n";
+import logo from "../assets/logo.png"
 
 const my_custom_param= new URL(window.location.href).searchParams.get("my_custom_param");
 
@@ -49,7 +50,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
             
         >
             <div>
-                <img src="" style={{ width: '150px', height: '30px', marginRight: '10px',  marginBottom: '20px'  }} />
+                <img src={logo} style={{ width: '150px', height: '30px', marginRight: '10px',  marginBottom: '20px'  }} />
                 <div style={{ fontFamily: 'DaytonaPro-Light', fontWeight: 400, fontSize: '25px', lineHeight: '40px', color: '#253053', textAlign: 'left',marginBottom: '20px' }}>
                     Sign - In To Rise HR
                 </div>
@@ -129,7 +130,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                     )}
                                 </div>                               
                             </div>
-                            <div id="kc-form-buttons" className={getClassName("kcFormGroupClass")}>
+                            <div id="kc-form-buttons" className={getClassName("kcFormGroupClass")} style={{ marginTop: '0px'}}>
                                 <input
                                     type="hidden"
                                     id="id-hidden-input"
