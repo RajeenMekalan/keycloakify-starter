@@ -18,11 +18,13 @@ export default function MyExtraPage2(props: PageProps<Extract<KcContext, { pageI
     const { msg, msgStr } = i18n;
 
     return (
-        <Template
+        <Template 
         {...{ kcContext, i18n, doUseDefaultCss, classes }}
         displayMessage={false}
         headerNode={msg("emailForgotTitle")}
         infoNode={msg("emailInstruction")}
+        height="350px" 
+        bottom="100px"
     >
         <div>
             <img src={logo} style={{ width: '150px', height: '30px', marginRight: '10px', marginBottom: '20px' }} />
@@ -31,22 +33,20 @@ export default function MyExtraPage2(props: PageProps<Extract<KcContext, { pageI
             </div>
         </div>
         <form id="kc-reset-password-form" className={getClassName("kcFormClass")} action={url.loginAction} method="post">
-            <div className={getClassName("kcFormGroupClass")}>
-                <div className={getClassName("kcLabelWrapperClass")}>
-                    <label htmlFor="emailAddress" className={getClassName("kcLabelClass")}>
-                      Email Address
-                    </label>                       
-                </div>
-                <div className={getClassName("kcInputWrapperClass")}>
-                    <input
-                        type="text"
-                        id="emailAddress"
-                        name="emailAddress"
-                        className={getClassName("kcInputClass")}
-                        autoFocus                           
-                    />
-                </div>
-            </div>          
+            <div className={getClassName("kcFormGroupClass")}>                                     
+                    <div className="floating-label-group">
+                        <input
+                            type="password"
+                            id="emailAddress"
+                            name="emailAddress"
+                            className={getClassName("kcInputClass") + " form-control"}
+                            
+                        />
+                        <label htmlFor="emailAddress" className={getClassName("kcLabelClass") + " floating-label"} >
+                        Email Address
+                        </label>
+                    </div>                  
+                </div>          
             <div id="kc-form-buttons">
                 <input
                     className={clsx(
@@ -72,5 +72,4 @@ export default function MyExtraPage2(props: PageProps<Extract<KcContext, { pageI
         </form>
     </Template>
     );
-
 }

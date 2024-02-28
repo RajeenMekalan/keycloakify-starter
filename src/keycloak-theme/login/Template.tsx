@@ -14,7 +14,7 @@ import facebook from "./assets/facebook.svg";
 import youtube from "./assets/youtube.svg";
 import vimeo from "./assets/vimeo.svg";
 
-export default function Template(props: TemplateProps<KcContext, I18n>) {
+export default function Template(props: TemplateProps<KcContext, I18n> & { height?: string , bottom?: string }) {
     const {
         displayInfo = false,
         displayMessage = true,
@@ -28,7 +28,9 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
         i18n,
         doUseDefaultCss,
         classes,
-        children
+        children,
+        height = '500px',
+        bottom = "0px"
     } = props;
 
     const { getClassName } = useGetClassName({ doUseDefaultCss, classes });
@@ -79,7 +81,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
 
                 {/* Right Side Container */}
                 <div className="right-side">
-                    <div className={clsx(getClassName("kcFormCardClass"), displayWide && getClassName("kcFormCardAccountClass"))} style={{ width: '420px', height: '500px', borderRadius: '25px', marginBottom:'0px', padding:'40px'}}>
+                    <div className={clsx(getClassName("kcFormCardClass"), displayWide && getClassName("kcFormCardAccountClass"))} style={{ width: '420px', height: height, borderRadius: '25px', marginBottom: bottom, padding:'40px'}}>
                         <div id="kc-content">
                             <div id="kc-content-wrapper">
                                 {/* App-initiated actions should not see warning messages about the need to complete the action during login. */}
