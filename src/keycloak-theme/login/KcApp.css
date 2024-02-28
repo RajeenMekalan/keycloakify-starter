@@ -21,9 +21,10 @@
 	padding-top: 120px;
 }
 
-.my-root-class body {
+/* .my-root-class body {
 	background: url(./assets/background.jpg) no-repeat center center fixed;
-}
+} */
+
 .left-side,
 .right-side {
     flex: 1;
@@ -109,4 +110,13 @@
 
 #kc-form-buttons {
     margin-top: 30px;
+}
+
+.login-pf body {
+	margin: 0;
+    padding: 0;
+    background-image: url(./assets/background.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
