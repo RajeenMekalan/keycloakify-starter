@@ -67,20 +67,19 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
 
                         <img src={login} style={{ width: '400px', height: '400px' }} />
 
-                        <div style={{ fontWeight: 400, fontSize: '14px', lineHeight: '20.77px', textAlign: 'center' }}>
+                        {/* <div style={{ fontWeight: 400, fontSize: '14px', lineHeight: '20.77px', textAlign: 'center' }}>
                             Lorem ipsum dolor sit amet, cons elit.
                         </div>
 
-                        {/* Second label with specified styles */}
                         <div style={{ fontWeight: 400, fontSize: '14px', lineHeight: '20.77px', textAlign: 'center', marginTop: '10px' }}>
                             Lorem ipsum dolor sit amet, cons elit.
-                        </div>
+                        </div> */}
                     </div>
                 </div>
 
                 {/* Right Side Container */}
                 <div className="right-side">
-                    <div className={clsx(getClassName("kcFormCardClass"), displayWide && getClassName("kcFormCardAccountClass"))} style={{ width: '420px', height: '500px', borderRadius: '25px', marginBottom:'0px'}}>
+                    <div className={clsx(getClassName("kcFormCardClass"), displayWide && getClassName("kcFormCardAccountClass"))} style={{ width: '420px', height: '500px', borderRadius: '25px', marginBottom:'0px', padding:'40px'}}>
                         <div id="kc-content">
                             <div id="kc-content-wrapper">
                                 {/* App-initiated actions should not see warning messages about the need to complete the action during login. */}

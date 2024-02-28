@@ -4,6 +4,10 @@ import { useGetClassName } from "keycloakify/login/lib/useGetClassName";
 import type { KcContext } from "../kcContext";
 import type { I18n } from "../i18n";
 import logo from "../assets/logo.png"
+import random from "../assets/Random.svg"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { useState } from "react";
 
 export default function MyExtraPage2(props: PageProps<Extract<KcContext, { pageId: "my-extra-page-3.ftl"; }>, I18n>) {
 
@@ -17,7 +21,12 @@ export default function MyExtraPage2(props: PageProps<Extract<KcContext, { pageI
     const { url, realm, auth } = kcContext;
 
     const { msg, msgStr } = i18n;
+    
+    const [passwordVisible, setPasswordVisible] = useState(false);
 
+    const togglePasswordVisibility = () => {
+        setPasswordVisible(!passwordVisible);
+    };
 
     return (
         <Template
@@ -32,39 +41,34 @@ export default function MyExtraPage2(props: PageProps<Extract<KcContext, { pageI
                     Set Your Password
                 </div>
             </div>
-            <form id="kc-reset-password-form" className={getClassName("kcFormClass")} action={url.loginAction} method="post">
-                <div className={getClassName("kcFormGroupClass")}>
-                    <div className={getClassName("kcLabelWrapperClass")}>
-                        <label htmlFor="newPassowrd" className={getClassName("kcLabelClass")}>
-                           New Password
-                        </label>                       
-                    </div>
-                    <div className={getClassName("kcInputWrapperClass")}>
+            <form id="kc-reset-password-form" className={getClassName("kcFormClass")} action={url.loginAction} method="post">              
+                <div className={getClassName("kcFormGroupClass")}>                                     
+                    <div className="floating-label-group">
                         <input
-                            type="text"
+                            type="password"
                             id="newPassowrd"
                             name="newPassowrd"
-                            className={getClassName("kcInputClass")}
-                            autoFocus                           
+                            className={getClassName("kcInputClass") + " form-control"}
+                            
                         />
-                    </div>
-                </div>
-                <div className={getClassName("kcFormGroupClass")}>
-                    <div className={getClassName("kcLabelWrapperClass")}>
-                        <label htmlFor="confirmPassword" className={getClassName("kcLabelClass")}>
-                           Confirm Password
+                        <label htmlFor="newPassowrd" className={getClassName("kcLabelClass") + " floating-label"} >
+                            New Password
                         </label>
-                    </div>
-                    <div className={getClassName("kcInputWrapperClass")}>
-                        <input
-                            type="text"
-                            id="confirmPassword"
-                            name="confirmPassword"
-                            className={getClassName("kcInputClass")}
-                            autoFocus
-                        />
-                    </div>
+                    </div>                  
                 </div>
+                <div className={getClassName("kcFormGroupClass")} style={{marginTop:'20px'}}>                                     
+                    <div className="floating-label-group">
+                        <input
+                            type="password"
+                            id="confirmPassowrd"
+                            name="confirmPassowrd"
+                            className={getClassName("kcInputClass") + " form-control"}                           
+                        />
+                        <label htmlFor="confirmPassowrd" className={getClassName("kcLabelClass") + " floating-label"} >
+                            Confirm Password
+                        </label>
+                    </div>                  
+                </div>              
                 <div id="kc-form-buttons">
                     <input
                         className={clsx(
@@ -82,7 +86,7 @@ export default function MyExtraPage2(props: PageProps<Extract<KcContext, { pageI
                     <span style={{ fontSize: '14px', color: '#8C8C8C' }}>or</span>
                 </div>
                 <div id="kc-form-buttons">
-                    <input
+                    <button
                         className={clsx(
                             getClassName("kcButtonClass"),
                             getClassName("kcButtonPrimaryClass"),
@@ -90,12 +94,13 @@ export default function MyExtraPage2(props: PageProps<Extract<KcContext, { pageI
                             getClassName("kcButtonLargeClass")
                         )}
                         type="submit"
-                        value="Generate Password"
                         style={{ borderRadius: '6px', fontSize: '14px', border: '1px solid #1E24323B', background: '#FFFFFF', color: '#2C82F9', fontWeight: '400px', paddingRight: '0px' }}
-                    />
+                    >
+                        <img src={random} style={{ width: '14px', height: '14px', marginRight: '5px', marginBottom:'2px'}} />
+                        Generate Password
+                    </button>
                 </div>
             </form>
         </Template>
     );
-
 }
