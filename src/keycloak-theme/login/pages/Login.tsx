@@ -65,7 +65,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
 
                     {realm.password && (
                         <form id="kc-form-login" onSubmit={onSubmit} action={url.loginAction} method="post">
-                            <div className={getClassName("kcFormGroupClass")}>
+                            <div className={getClassName("kcFormGroupClass")} style={{marginTop:'30px'}}>
                                 {!usernameHidden &&
                                     (() => {
                                         const label = !realm.loginWithEmailAllowed
@@ -78,40 +78,41 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
 
                                         return (
                                             <>
-                                                <label htmlFor={autoCompleteHelper} className={getClassName("kcLabelClass")}>
-                                                 Email Address
-                                                </label>
-                                                <input
-                                                    tabIndex={1}
-                                                    id={autoCompleteHelper}
-                                                    className={getClassName("kcInputClass")}
-                                                    //NOTE: This is used by Google Chrome auto fill so we use it to tell
-                                                    //the browser how to pre fill the form but before submit we put it back
-                                                    //to username because it is what keycloak expects.
-                                                    name={autoCompleteHelper}
-                                                    defaultValue={login.username ?? ""}
-                                                    type="text"
-                                                    autoFocus={true}
-                                                    autoComplete="off"
-                                                />
-                                            </>
+                                                <div className="floating-label-group" style={{marginRight:'0px', marginLeft:'0px'}}>
+                                                    <input
+                                                        tabIndex={1}
+                                                        id={autoCompleteHelper}
+                                                        className={getClassName("kcInputClass") + " form-control"}
+                                                        name={autoCompleteHelper}
+                                                        defaultValue={login.username ?? ""}
+                                                        type="text"
+                                                        autoFocus={true}
+                                                        autoComplete="off"
+                                                    />
+                                                    <label htmlFor={autoCompleteHelper} className={getClassName("kcLabelClass") + " floating-label"}>
+                                                        Email Address
+                                                    </label>
+                                                </div>                                                                      
+                                            </>                                           
                                         );
                                     })()}
                             </div>
-                            <div className={getClassName("kcFormGroupClass")}>
-                                <label htmlFor="password" className={getClassName("kcLabelClass")}>
-                                    Confirm Password
-                                </label>
-                                <input
-                                    tabIndex={2}
-                                    id="password"
-                                    className={getClassName("kcInputClass")}
-                                    name="password"
-                                    type="password"
-                                    autoComplete="off"
-                                />
+                            <div className={getClassName("kcFormGroupClass")} style={{marginTop:'30px'}}>                             
+                                <div className="floating-label-group" style={{ marginRight: '0px', marginLeft: '0px' }}>
+                                    <input
+                                        tabIndex={2}
+                                        id="password"
+                                        className={getClassName("kcInputClass") + " form-control"}
+                                        name="password"
+                                        type="password"
+                                        autoComplete="off"
+                                    />
+                                    <label htmlFor="password" className={getClassName("kcLabelClass")+ " floating-label"}>
+                                        Confirm Password
+                                    </label>
+                                </div>  
                             </div>
-                            <div className={clsx(getClassName("kcFormGroupClass"), getClassName("kcFormSettingClass"))}>
+                            <div className={clsx(getClassName("kcFormGroupClass"), getClassName("kcFormSettingClass"))} style={{marginTop:'15px'}}>
                                 <div id="kc-form-options">
                                     {realm.rememberMe && !usernameHidden && (
                                         <div className="checkbox">
@@ -134,7 +135,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                     )}
                                 </div>                               
                             </div>
-                            <div id="kc-form-buttons" className={getClassName("kcFormGroupClass")} style={{ marginTop: '0px'}}>
+                            <div id="kc-form-buttons" className={getClassName("kcFormGroupClass")} style={{ marginTop: '10px'}}>
                                 <input
                                     type="hidden"
                                     id="id-hidden-input"
@@ -161,7 +162,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                     style={{backgroundColor:'#2C82F9', borderRadius:'6px', color:'#FFFFFF'}}
                                 />
                             </div>
-                            <div className={getClassName("kcFormGroupClass")} style={{ textAlign: 'center' }}>
+                            <div className={getClassName("kcFormGroupClass")} style={{ textAlign: 'center',marginTop:'10px' }}>
                                 <div className={getClassName("kcFormOptionsWrapperClass")}>
                                     {realm.resetPasswordAllowed && (
                                         <span>
@@ -172,12 +173,12 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                     )}
                                 </div>
                             </div>
-                            <div className={getClassName("kcFormGroupClass")}>
+                            <div className={getClassName("kcFormGroupClass")} style={{marginTop:'20px' }} >
                                 <div className="separator">
                                     <span style={{fontSize:'14px', color:'#8C8C8C'}}>or continue with:</span>
                                 </div>
                             </div>
-                            <div className={getClassName("kcFormGroupClass")}>
+                            <div className={getClassName("kcFormGroupClass")} style={{ marginTop:'10px' }}>
                                 {realm.password && social.providers !== undefined && (
                                     <div
                                         id="kc-social-providers"                                       
