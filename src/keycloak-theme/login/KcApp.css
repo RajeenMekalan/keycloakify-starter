@@ -22,7 +22,7 @@
 }
 
 .my-root-class body {
-	background: url(./assets/backgrounding.jpg) no-repeat center center fixed;
+	background: url(./assets/background.jpg) no-repeat center center fixed;
 }
 .left-side,
 .right-side {
