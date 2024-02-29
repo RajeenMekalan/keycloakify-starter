@@ -13,6 +13,7 @@ import linkedIn from "./assets/linkedin.svg";
 import facebook from "./assets/facebook.svg";
 import youtube from "./assets/youtube.svg";
 import vimeo from "./assets/vimeo.svg";
+import { useState } from "react";
 
 export default function Template(props: TemplateProps<KcContext, I18n> & { height?: string , bottom?: string }) {
     const {
@@ -39,6 +40,13 @@ export default function Template(props: TemplateProps<KcContext, I18n> & { heigh
 
     const { realm, locale, auth, url, message, isAppInitiatedAction } = kcContext;
 
+    const [showOverlayPopup, setShowOverlayPopup] = useState(true);
+
+    const handleDismiss = () => {
+        // Hide the overlay popup
+        setShowOverlayPopup(false);
+    };
+
     const { isReady } = usePrepareTemplate({
         "doFetchDefaultThemeResources": doUseDefaultCss,
         "styles": [
@@ -56,7 +64,42 @@ export default function Template(props: TemplateProps<KcContext, I18n> & { heigh
     }
 
     return (
+        
         <div className={getClassName("kcLoginClass")}>
+
+            {/* Validation Messages */}   
+            {displayMessage && message !== undefined && (message.type !== "warning" || !isAppInitiatedAction) && (
+                <>
+                    {message.type === "info" && (
+                         <div className={showOverlayPopup ? "popup-overlay" : "hidden"}>
+                         <div className="popup-content">                   
+                             <span style={{color:'#253053', fontSize:'16px'}}>Forgot Password</span>                  
+                             <p
+                                 className="kc-feedback-text"
+                                 dangerouslySetInnerHTML={{
+                                     "__html": message.summary
+                                 }} style={{ textAlign: 'center', margin:'10px 0px 10px' }}
+                             />
+                             <button onClick={handleDismiss} className="ok-button">OK</button>
+                         </div>
+                     </div>
+                    )}
+                    {message.type !== "info" && (
+                        <div className="top-center">
+                            {message.type === "success" && <span className={getClassName("kcFeedbackSuccessIcon")}></span>}
+                            {message.type === "warning" && <span className={getClassName("kcFeedbackWarningIcon")}></span>}
+                            {message.type === "error" && <span className={getClassName("kcFeedbackErrorIcon")}></span>}
+
+                            <span
+                                className="kc-feedback-text"
+                                dangerouslySetInnerHTML={{
+                                    "__html": message.summary
+                                }} style={{ marginLeft: '5px' }}
+                            />
+                        </div>
+                    )}
+                </>
+            )}
 
             <div className="middle-container">
                 {/* Left Side Container */}
@@ -68,14 +111,6 @@ export default function Template(props: TemplateProps<KcContext, I18n> & { heigh
                         </div>
 
                         <img src={login} style={{ width: '400px', height: '400px' }} />
-
-                        {/* <div style={{ fontWeight: 400, fontSize: '14px', lineHeight: '20.77px', textAlign: 'center' }}>
-                            Lorem ipsum dolor sit amet, cons elit.
-                        </div>
-
-                        <div style={{ fontWeight: 400, fontSize: '14px', lineHeight: '20.77px', textAlign: 'center', marginTop: '10px' }}>
-                            Lorem ipsum dolor sit amet, cons elit.
-                        </div> */}
                     </div>
                 </div>
 
@@ -83,22 +118,7 @@ export default function Template(props: TemplateProps<KcContext, I18n> & { heigh
                 <div className="right-side">
                     <div className={clsx(getClassName("kcFormCardClass"), displayWide && getClassName("kcFormCardAccountClass"))} style={{ width: '420px', height: height, borderRadius: '25px', marginBottom: bottom, padding:'40px'}}>
                         <div id="kc-content">
-                            <div id="kc-content-wrapper">
-                                {/* App-initiated actions should not see warning messages about the need to complete the action during login. */}
-                                {displayMessage && message !== undefined && (message.type !== "warning" || !isAppInitiatedAction) && (
-                                    <div className={clsx("alert", `alert-${message.type}`)}>
-                                        {message.type === "success" && <span className={getClassName("kcFeedbackSuccessIcon")}></span>}
-                                        {message.type === "warning" && <span className={getClassName("kcFeedbackWarningIcon")}></span>}
-                                        {message.type === "error" && <span className={getClassName("kcFeedbackErrorIcon")}></span>}
-                                        {message.type === "info" && <span className={getClassName("kcFeedbackInfoIcon")}></span>}
-                                        <span
-                                            className="kc-feedback-text"
-                                            dangerouslySetInnerHTML={{
-                                                "__html": message.summary
-                                            }}
-                                        />
-                                    </div>
-                                )}
+                            <div id="kc-content-wrapper">                               
                                 {children}
                                 {auth !== undefined && auth.showTryAnotherWayLink && showAnotherWayIfPresent && (
                                     <form
