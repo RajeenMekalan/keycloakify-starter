@@ -39,7 +39,7 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
                             id="newPassowrd"
                             name="newPassowrd"
                             className={getClassName("kcInputClass") + " form-control"}
-                            
+                            required                            
                         />
                         <label htmlFor="newPassowrd" className={getClassName("kcLabelClass") + " floating-label"} >
                             New Password
@@ -52,7 +52,8 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
                             type="password"
                             id="confirmPassowrd"
                             name="confirmPassowrd"
-                            className={getClassName("kcInputClass") + " form-control"}                           
+                            className={getClassName("kcInputClass") + " form-control"}    
+                            required                       
                         />
                         <label htmlFor="confirmPassowrd" className={getClassName("kcLabelClass") + " floating-label"} >
                             Confirm Password

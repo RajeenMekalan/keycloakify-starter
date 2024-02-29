@@ -49,6 +49,7 @@ export default function MyExtraPage2(props: PageProps<Extract<KcContext, { pageI
                             id="newPassowrd"
                             name="newPassowrd"
                             className={getClassName("kcInputClass") + " form-control"}
+                            required
                             
                         />
                         <label htmlFor="newPassowrd" className={getClassName("kcLabelClass") + " floating-label"} >
@@ -62,7 +63,8 @@ export default function MyExtraPage2(props: PageProps<Extract<KcContext, { pageI
                             type="password"
                             id="confirmPassowrd"
                             name="confirmPassowrd"
-                            className={getClassName("kcInputClass") + " form-control"}                           
+                            className={getClassName("kcInputClass") + " form-control"}  
+                            required                         
                         />
                         <label htmlFor="confirmPassowrd" className={getClassName("kcLabelClass") + " floating-label"} >
                             Confirm Password

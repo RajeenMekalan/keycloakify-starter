@@ -40,6 +40,7 @@ export default function MyExtraPage2(props: PageProps<Extract<KcContext, { pageI
                             id="emailAddress"
                             name="emailAddress"
                             className={getClassName("kcInputClass") + " form-control"}
+                            required
                             
                         />
                         <label htmlFor="emailAddress" className={getClassName("kcLabelClass") + " floating-label"} >

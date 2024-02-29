@@ -32,6 +32,7 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                             id="Passowrd"
                             name="Passowrd"
                             className={getClassName("kcInputClass") + " form-control"}
+                            required
                             
                         />
                         <label htmlFor="Passowrd" className={getClassName("kcLabelClass") + " floating-label"} >

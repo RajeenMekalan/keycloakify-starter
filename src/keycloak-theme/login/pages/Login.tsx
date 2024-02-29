@@ -88,6 +88,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                                         type="text"
                                                         autoFocus={true}
                                                         autoComplete="off"
+                                                        required
                                                     />
                                                     <label htmlFor={autoCompleteHelper} className={getClassName("kcLabelClass") + " floating-label"}>
                                                         Email Address
@@ -106,6 +107,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                         name="password"
                                         type="password"
                                         autoComplete="off"
+                                        required
                                     />
                                     <label htmlFor="password" className={getClassName("kcLabelClass")+ " floating-label"}>
                                         Confirm Password
