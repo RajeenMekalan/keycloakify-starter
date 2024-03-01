@@ -17,6 +17,13 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
 
     const { msg, msgStr } = i18n;
 
+        // Function to handle form submission
+        const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+            event.preventDefault();
+            postMessage({ type: "info", summary: "kindly check your email to reset your password" });
+            console.log(postMessage);
+        };
+
     return (
         <Template
             {...{ kcContext, i18n, doUseDefaultCss, classes }}
@@ -32,11 +39,11 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
                     Forgot Password
                 </div>
             </div>
-            <form id="kc-reset-password-form" className={getClassName("kcFormClass")} action={url.loginAction} method="post">              
+            <form id="kc-reset-password-form" className={getClassName("kcFormClass")} action={url.loginAction} method="post" onSubmit={handleFormSubmit}>              
                 <div className={getClassName("kcFormGroupClass")}>
                     <div className="floating-label-group">
                         <input
-                            type="password"
+                            type="text"
                             id="emailAddress"
                             name="emailAddress"
                             className={getClassName("kcInputClass") + " form-control"}
@@ -64,7 +71,7 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
                 <div className={getClassName("kcFormGroupClass")} style={{ textAlign: 'center', marginTop: '20px' }}>
                     <div className={getClassName("kcFormOptionsWrapperClass")}>
                         <span>
-                            <a tabIndex={5} style={{ fontSize: '14px', color: '#2C82F9', fontWeight: '400' }}>
+                            <a href={url.loginUrl} tabIndex={5} style={{ fontSize: '14px', color: '#2C82F9', fontWeight: '400' }}>
                                 Sign - In
                             </a>
                         </span>
