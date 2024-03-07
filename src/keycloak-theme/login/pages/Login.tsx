@@ -42,6 +42,17 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
         formElement.submit();
     });
 
+    const handleInvalidInput = (event: React.FormEvent<HTMLInputElement>, errorMessage: string) => {
+        const target = event.target as HTMLInputElement;
+        target.setCustomValidity(errorMessage);
+    };
+
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>, errorMessage: string) => {
+        const target = event.target as HTMLInputElement;
+        const isValidEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(target.value);
+        target.setCustomValidity(isValidEmail ? '' : errorMessage);     
+    };
+
     return (
         <Template
             {...{ kcContext, i18n, doUseDefaultCss, classes }}
@@ -75,7 +86,6 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                                 : "usernameOrEmail";
 
                                         const autoCompleteHelper: typeof label = label === "usernameOrEmail" ? "username" : label;
-
                                         return (
                                             <>
                                                 <div className="floating-label-group" style={{marginRight:'0px', marginLeft:'0px'}}>
@@ -87,7 +97,10 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                                         defaultValue={login.username ?? ""}
                                                         type="text"
                                                         autoFocus={true}
-                                                        autoComplete="off"
+                                                        autoComplete="off"         
+                                                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"                                             
+                                                        onInvalid={(e) => handleInvalidInput(e, 'Enter a valid Email Address')}
+                                                        onChange={(e) => handleInputChange(e, 'Enter a valid Email Address')}
                                                         required
                                                     />
                                                     <label htmlFor={autoCompleteHelper} className={getClassName("kcLabelClass") + " floating-label"}>
@@ -107,6 +120,8 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                         name="password"
                                         type="password"
                                         autoComplete="off"
+                                        onInvalid={(e) => handleInvalidInput(e, 'Enter a Password')}
+                                        onChange={(e) => handleInputChange(e, '')}
                                         required
                                     />
                                     <label htmlFor="password" className={getClassName("kcLabelClass")+ " floating-label"}>

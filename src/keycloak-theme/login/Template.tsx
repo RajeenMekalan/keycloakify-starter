@@ -104,7 +104,7 @@ export default function Template(props: TemplateProps<KcContext, I18n> & { heigh
             <div className="middle-container">
                 {/* Left Side Container */}
                 <div className="left-side">
-                    <div style={{ width: '520px', height: '500px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'end', justifyContent: 'center' }}>
 
                         <div style={{ fontWeight: 400, fontSize: '48px', lineHeight: '48px', color: '#253053', textAlign: 'center' }}>
                             Welcome Back!
@@ -163,7 +163,7 @@ export default function Template(props: TemplateProps<KcContext, I18n> & { heigh
             </div>
 
             {/* Footer */}
-            <div style={{ position: 'absolute', bottom: '0', width: '100%', textAlign: 'center', paddingBottom: '20px' }}>
+            <div style={{ bottom: '0', width: '100%', textAlign: 'center', paddingBottom: '20px' }}>
                 <div style={{ textAlign: 'center', marginTop: '10px' }}>
                     <img src={twitter} alt="Twitter" style={{ width: '20px', height: '20px', margin: '0 5px' }} />
                     <img src={facebook} alt="Twitter" style={{ width: '20px', height: '20px', margin: '0 5px' }} />

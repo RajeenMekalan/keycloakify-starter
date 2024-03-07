@@ -17,18 +17,22 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
 
     const { msg, msgStr } = i18n;
 
-        // Function to handle form submission
-        const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-            event.preventDefault();
-            postMessage({ type: "info", summary: "kindly check your email to reset your password" });
-            console.log(postMessage);
-        };
+    const handleInvalidInput = (event: React.FormEvent<HTMLInputElement>, errorMessage: string) => {
+        const target = event.target as HTMLInputElement;
+        target.setCustomValidity(errorMessage);
+    };
+
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>, errorMessage: string) => {
+        const target = event.target as HTMLInputElement;
+        const isValidEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(target.value);
+        target.setCustomValidity(isValidEmail ? '' : errorMessage);     
+    }; 
 
     return (
         <Template
             {...{ kcContext, i18n, doUseDefaultCss, classes }}
-            displayMessage={false}
-            headerNode={msg("emailForgotTitle")}
+            displayMessage={true}
+            headerNode={msg("emailForgotTitle")} 
             infoNode={msg("emailInstruction")}
             height="350px" 
             bottom="100px"
@@ -39,14 +43,17 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
                     Forgot Password
                 </div>
             </div>
-            <form id="kc-reset-password-form" className={getClassName("kcFormClass")} action={url.loginAction} method="post" onSubmit={handleFormSubmit}>              
+            <form id="kc-reset-password-form" className={getClassName("kcFormClass")} action={url.loginAction} method="post">              
                 <div className={getClassName("kcFormGroupClass")}>
                     <div className="floating-label-group">
                         <input
-                            type="text"
+                            type="email"
                             id="emailAddress"
                             name="emailAddress"
                             className={getClassName("kcInputClass") + " form-control"}
+                            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"                                             
+                            onInvalid={(e) => handleInvalidInput(e, 'Enter a valid Email Address')}
+                            onChange={(e) => handleInputChange(e, 'Enter a valid Email Address')}
                             required
 
                         />
