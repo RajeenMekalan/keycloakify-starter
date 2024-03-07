@@ -66,7 +66,7 @@ export default function Template(props: TemplateProps<KcContext, I18n> & { heigh
     return (
         
         <div className={getClassName("kcLoginClass")}>
-
+            
             {/* Validation Messages */}   
             {displayMessage && message !== undefined && (message.type !== "warning" || !isAppInitiatedAction) && (
                 <>

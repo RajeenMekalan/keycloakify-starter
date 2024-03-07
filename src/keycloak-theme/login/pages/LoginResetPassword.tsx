@@ -47,9 +47,9 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
                 <div className={getClassName("kcFormGroupClass")}>
                     <div className="floating-label-group">
                         <input
-                            type="email"
-                            id="emailAddress"
-                            name="emailAddress"
+                            type="text"
+                            id="username"
+                            name="username"
                             className={getClassName("kcInputClass") + " form-control"}
                             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"                                             
                             onInvalid={(e) => handleInvalidInput(e, 'Enter a valid Email Address')}
@@ -57,7 +57,7 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
                             required
 
                         />
-                        <label htmlFor="emailAddress" className={getClassName("kcLabelClass") + " floating-label"} >
+                        <label htmlFor="username" className={getClassName("kcLabelClass") + " floating-label"} >
                             Email Address
                         </label>
                     </div>
