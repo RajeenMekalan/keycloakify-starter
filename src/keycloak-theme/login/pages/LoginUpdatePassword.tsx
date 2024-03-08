@@ -5,15 +5,34 @@ import type { KcContext } from "../kcContext";
 import type { I18n } from "../i18n";
 import logo from "../assets/logo.png"
 import random from "../assets/Random.svg"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { useState } from "react";
+import eyeicon from "../assets/eyeIcon.svg";
 
 export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, { pageId: "login-update-password.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
+
     const { getClassName } = useGetClassName({
         doUseDefaultCss,
         classes
     });
+
+    const { url, realm, auth } = kcContext;
+
     const { msg, msgStr } = i18n;
-    const {  realm, url,  auth } = kcContext;
+    
+    const [isPasswordVisible , setPasswordVisible] = useState(false);
+    const [isConfirmPasswordVisible , setConfirmPasswordVisible] = useState(false);
+
+    const togglePasswordVisibility = () => {
+        setPasswordVisible(!isPasswordVisible);
+    };
+
+    const toggleConfirmPasswordVisibility = () => {
+        setConfirmPasswordVisible(!isConfirmPasswordVisible);
+    };
+
 
     return (
         <Template {...{ kcContext, i18n, doUseDefaultCss, classes }} headerNode={msg("updatePasswordTitle")}>
@@ -25,21 +44,65 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
             </div>
 
             <form id="kc-passwd-update-form" className={getClassName("kcFormClass")} action={url.loginAction} method="post">                
-                <div className={getClassName("kcFormGroupClass")}>                                     
+            <div className={getClassName("kcFormGroupClass")}>                                     
                     <div className="floating-label-group">
                         <input
-                            type="password"
-                            id="Passowrd"
-                            name="Passowrd"
+                            type={isPasswordVisible ? "text" : "password"}
+                            id="newPassowrd"
+                            name="newPassowrd"
                             className={getClassName("kcInputClass") + " form-control"}
                             required
                             
                         />
-                        <label htmlFor="Passowrd" className={getClassName("kcLabelClass") + " floating-label"} >
-                            Password
+                        <label htmlFor="newPassowrd" className={getClassName("kcLabelClass") + " floating-label"} >
+                            New Password
                         </label>
+                        <img
+                            src={eyeicon}
+                            alt="Toggle password visibility"
+                            className="password-toggle-icon"
+                            onClick={togglePasswordVisibility}
+                            style={{ cursor: 'pointer', position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)' }}
+                        />
                     </div>                  
-                </div>               
+                </div>
+                <div className={getClassName("kcFormGroupClass")} style={{marginTop:'20px'}}>                                     
+                    <div className="floating-label-group">
+                        <input
+                            type={isConfirmPasswordVisible ? "text" : "password"}
+                            id="confirmPassowrd"
+                            name="confirmPassowrd"
+                            className={getClassName("kcInputClass") + " form-control"}  
+                            required                         
+                        />
+                        <label htmlFor="confirmPassowrd" className={getClassName("kcLabelClass") + " floating-label"} >
+                            Confirm Password
+                        </label>
+                        <img
+                            src={eyeicon}
+                            alt="Toggle password visibility"
+                            className="password-toggle-icon"
+                            onClick={toggleConfirmPasswordVisibility}
+                            style={{ cursor: 'pointer', position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)' }}
+                        />
+                    </div>                  
+                </div>              
+                <div id="kc-form-buttons">
+                    <input
+                        className={clsx(
+                            getClassName("kcButtonClass"),
+                            // getClassName("kcButtonPrimaryClass"),
+                            getClassName("kcButtonBlockClass"),
+                            getClassName("kcButtonLargeClass")
+                        )}
+                        type="submit"
+                        value="Reset Password"
+                        style={{ backgroundColor: '#2C82F9', borderRadius: '6px', color: '#FFFFFF' }}
+                    />
+                </div>
+                <div className="separator" style={{ marginTop: '30px'}}>
+                    <span style={{ fontSize: '14px', color: '#8C8C8C' }}>or</span>
+                </div>
                 <div id="kc-form-buttons">
                     <button
                         className={clsx(
@@ -54,31 +117,6 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                         <img src={random} style={{ width: '14px', height: '14px', marginRight: '5px', marginBottom:'2px'}} />
                         Generate Password
                     </button>
-                </div>
-                <div id="kc-form-buttons">
-                    <input
-                        className={clsx(
-                            getClassName("kcButtonClass"),
-                            // getClassName("kcButtonPrimaryClass"),
-                            getClassName("kcButtonBlockClass"),
-                            getClassName("kcButtonLargeClass")
-                        )}
-                        type="submit"
-                        value="Confirm"
-                        style={{ backgroundColor: '#2C82F9', borderRadius: '6px', color: '#FFFFFF' }}
-                    />
-                </div>
-                <div className="separator" style={{ marginTop: '30px'}}>
-                    <span style={{ fontSize: '14px', color: '#8C8C8C' }}>or</span>
-                </div>               
-                 <div className={getClassName("kcFormGroupClass")} style={{ textAlign: 'center',marginTop:'20px'  }}>
-                    <div className={getClassName("kcFormOptionsWrapperClass")}>                   
-                            <span>
-                                <a tabIndex={5} style={{ fontSize: '13px', color: '#2C82F9', fontWeight: '400px'}}>
-                                    Create Password Manually
-                                </a>
-                            </span>
-                    </div>
                 </div>
             </form>
         </Template>

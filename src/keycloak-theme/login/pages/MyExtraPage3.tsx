@@ -5,28 +5,16 @@ import type { KcContext } from "../kcContext";
 import type { I18n } from "../i18n";
 import logo from "../assets/logo.png"
 import random from "../assets/Random.svg"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { useState } from "react";
 
 export default function MyExtraPage2(props: PageProps<Extract<KcContext, { pageId: "my-extra-page-3.ftl"; }>, I18n>) {
 
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
-
     const { getClassName } = useGetClassName({
         doUseDefaultCss,
         classes
     });
-
-    const { url, realm, auth } = kcContext;
-
     const { msg, msgStr } = i18n;
-    
-    const [passwordVisible, setPasswordVisible] = useState(false);
-
-    const togglePasswordVisibility = () => {
-        setPasswordVisible(!passwordVisible);
-    };
+    const {  realm, url,  auth } = kcContext;
 
     return (
         <Template
@@ -35,58 +23,28 @@ export default function MyExtraPage2(props: PageProps<Extract<KcContext, { pageI
             headerNode={msg("emailForgotTitle")}
             infoNode={msg("emailInstruction")}
         >
-            <div>
+           <div>
                 <img src={logo} style={{ width: '150px', height: '30px', marginRight: '10px', marginBottom: '20px' }} />
                 <div style={{ fontWeight: 400, fontSize: '25px', lineHeight: '40px', color: '#253053', textAlign: 'left', marginBottom: '20px' }}>
                     Set Your Password
                 </div>
             </div>
             <form id="kc-reset-password-form" className={getClassName("kcFormClass")} action={url.loginAction} method="post">              
-                <div className={getClassName("kcFormGroupClass")}>                                     
+            <div className={getClassName("kcFormGroupClass")}>                                     
                     <div className="floating-label-group">
                         <input
                             type="password"
-                            id="newPassowrd"
-                            name="newPassowrd"
+                            id="Passowrd"
+                            name="Passowrd"
                             className={getClassName("kcInputClass") + " form-control"}
                             required
                             
                         />
-                        <label htmlFor="newPassowrd" className={getClassName("kcLabelClass") + " floating-label"} >
-                            New Password
+                        <label htmlFor="Passowrd" className={getClassName("kcLabelClass") + " floating-label"} >
+                            Password
                         </label>
                     </div>                  
-                </div>
-                <div className={getClassName("kcFormGroupClass")} style={{marginTop:'20px'}}>                                     
-                    <div className="floating-label-group">
-                        <input
-                            type="password"
-                            id="confirmPassowrd"
-                            name="confirmPassowrd"
-                            className={getClassName("kcInputClass") + " form-control"}  
-                            required                         
-                        />
-                        <label htmlFor="confirmPassowrd" className={getClassName("kcLabelClass") + " floating-label"} >
-                            Confirm Password
-                        </label>
-                    </div>                  
-                </div>              
-                <div id="kc-form-buttons">
-                    <input
-                        className={clsx(
-                            getClassName("kcButtonClass"),
-                            // getClassName("kcButtonPrimaryClass"),
-                            getClassName("kcButtonBlockClass"),
-                            getClassName("kcButtonLargeClass")
-                        )}
-                        type="submit"
-                        value="Reset Password"
-                        style={{ backgroundColor: '#2C82F9', borderRadius: '6px', color: '#FFFFFF' }}
-                    />
-                </div>
-                <div className="separator" style={{ marginTop: '30px'}}>
-                    <span style={{ fontSize: '14px', color: '#8C8C8C' }}>or</span>
-                </div>
+                </div>               
                 <div id="kc-form-buttons">
                     <button
                         className={clsx(
@@ -101,6 +59,31 @@ export default function MyExtraPage2(props: PageProps<Extract<KcContext, { pageI
                         <img src={random} style={{ width: '14px', height: '14px', marginRight: '5px', marginBottom:'2px'}} />
                         Generate Password
                     </button>
+                </div>
+                <div id="kc-form-buttons">
+                    <input
+                        className={clsx(
+                            getClassName("kcButtonClass"),
+                            // getClassName("kcButtonPrimaryClass"),
+                            getClassName("kcButtonBlockClass"),
+                            getClassName("kcButtonLargeClass")
+                        )}
+                        type="submit"
+                        value="Confirm"
+                        style={{ backgroundColor: '#2C82F9', borderRadius: '6px', color: '#FFFFFF' }}
+                    />
+                </div>
+                <div className="separator" style={{ marginTop: '30px'}}>
+                    <span style={{ fontSize: '14px', color: '#8C8C8C' }}>or</span>
+                </div>               
+                 <div className={getClassName("kcFormGroupClass")} style={{ textAlign: 'center',marginTop:'20px'  }}>
+                    <div className={getClassName("kcFormOptionsWrapperClass")}>                   
+                            <span>
+                                <a tabIndex={5} style={{ fontSize: '13px', color: '#2C82F9', fontWeight: '400px'}}>
+                                    Create Password Manually
+                                </a>
+                            </span>
+                    </div>
                 </div>
             </form>
         </Template>

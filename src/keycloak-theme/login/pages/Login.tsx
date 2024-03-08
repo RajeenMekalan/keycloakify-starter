@@ -7,6 +7,7 @@ import type { KcContext } from "../kcContext";
 import type { I18n } from "../i18n";
 import logo from "../assets/logo.png"
 import microsoft from "../assets/microsoft.svg";
+import eyeicon from "../assets/eyeIcon.svg";
 
 const my_custom_param= new URL(window.location.href).searchParams.get("my_custom_param");
 
@@ -27,6 +28,12 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
     const { msg, msgStr } = i18n;
 
     const [isLoginButtonDisabled, setIsLoginButtonDisabled] = useState(false);
+    
+    const [isPasswordVisible, setPasswordVisible] = useState(false);
+
+     const togglePasswordVisibility = () => {
+        setPasswordVisible(!isPasswordVisible);
+    };
 
     const onSubmit = useConstCallback<FormEventHandler<HTMLFormElement>>(e => {
         e.preventDefault();
@@ -118,7 +125,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                         id="password"
                                         className={getClassName("kcInputClass") + " form-control"}
                                         name="password"
-                                        type="password"
+                                        type={isPasswordVisible ? "text" : "password"}
                                         autoComplete="off"
                                         onInvalid={(e) => handleInvalidInput(e, 'Enter a Password')}
                                         onChange={(e) => handleInputChange(e, '')}
@@ -127,6 +134,13 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                     <label htmlFor="password" className={getClassName("kcLabelClass")+ " floating-label"}>
                                         Confirm Password
                                     </label>
+                                    <img
+                                        src={eyeicon}
+                                        alt="Toggle password visibility"
+                                        className="password-toggle-icon"
+                                        onClick={togglePasswordVisibility}
+                                        style={{ cursor: 'pointer', position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)' }}
+                                    />
                                 </div>  
                             </div>
                             <div className={clsx(getClassName("kcFormGroupClass"), getClassName("kcFormSettingClass"))} style={{marginTop:'15px'}}>
