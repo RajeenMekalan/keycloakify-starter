@@ -4,6 +4,7 @@ import { useGetClassName } from "keycloakify/login/lib/useGetClassName";
 import type { KcContext } from "../kcContext";
 import type { I18n } from "../i18n";
 import logo from "../assets/logo.png"
+import { useState } from "react";
 
 export default function LoginResetPassword(props: PageProps<Extract<KcContext, { pageId: "login-reset-password.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
@@ -28,6 +29,19 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
         target.setCustomValidity(isValidEmail ? '' : errorMessage);     
     }; 
 
+    const [message, setMessage] = useState({ summary: "", type: "" });
+
+    // Function to handle form submission
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        try {
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            setMessage({ summary: "kindly check your email to reset your password.", type: "info" });
+        } catch (error) {
+            setMessage({ summary: "Password reset failed!", type: "error" });
+        }
+    };
+
     return (
         <Template
             {...{ kcContext, i18n, doUseDefaultCss, classes }}
@@ -43,7 +57,7 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
                     Forgot Password
                 </div>
             </div>
-            <form id="kc-reset-password-form" className={getClassName("kcFormClass")} action={url.loginAction} method="post">              
+            <form id="kc-reset-password-form" className={getClassName("kcFormClass")} action={url.loginAction} method="post" onSubmit={handleSubmit}>              
                 <div className={getClassName("kcFormGroupClass")}>
                     <div className="floating-label-group">
                         <input

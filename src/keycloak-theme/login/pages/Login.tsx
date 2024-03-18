@@ -106,8 +106,8 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                                         autoFocus={true}
                                                         autoComplete="off"         
                                                         pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"                                             
-                                                        onInvalid={(e) => handleInvalidInput(e, 'Enter a valid Email Address')}
-                                                        onChange={(e) => handleInputChange(e, 'Enter a valid Email Address')}
+                                                        onInvalid={(e) => handleInvalidInput(e, 'Enter a Valid Email Address')}
+                                                        onChange={(e) => handleInputChange(e, 'Enter a Valid Email Address')}
                                                         required
                                                     />
                                                     <label htmlFor={autoCompleteHelper} className={getClassName("kcLabelClass") + " floating-label"}>
@@ -132,7 +132,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                         required
                                     />
                                     <label htmlFor="password" className={getClassName("kcLabelClass")+ " floating-label"}>
-                                        Confirm Password
+                                        Password
                                     </label>
                                     <img
                                         src={eyeicon}

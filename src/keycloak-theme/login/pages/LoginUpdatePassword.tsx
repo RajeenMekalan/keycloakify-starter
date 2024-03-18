@@ -24,6 +24,9 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
     
     const [isPasswordVisible , setPasswordVisible] = useState(false);
     const [isConfirmPasswordVisible , setConfirmPasswordVisible] = useState(false);
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [passwordError, setPasswordError] = useState("");
 
     const togglePasswordVisibility = () => {
         setPasswordVisible(!isPasswordVisible);
@@ -31,6 +34,49 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
 
     const toggleConfirmPasswordVisibility = () => {
         setConfirmPasswordVisible(!isConfirmPasswordVisible);
+    };
+    
+    const validatePassword = (password: string): string => {
+        // Password must contain minimum of 8 characters
+        if (password.length < 8) {
+            return "Password must contain minimum of 8 characters";
+        }
+        // Password must contain maximum of 10 characters
+        if (password.length > 10) {
+            return "Password must contain maximum of 10 characters";
+        }
+        // Password must contain at least 1 lowercase character
+        if (!/[a-z]/.test(password)) {
+            return "Password must contain at least 1 lowercase character";
+        }
+        // Password must contain at least 1 uppercase character
+        if (!/[A-Z]/.test(password)) {
+            return "Password must contain at least 1 uppercase character";
+        }
+        // Password must contain at least 2 numbers
+        if ((password.match(/\d/g) || []).length < 2) {
+            return "Password must contain at least 2 numbers";
+        }
+        // Password must contain at least 1 Special Character
+        if (!/[^a-zA-Z0-9]/.test(password)) {
+            return "Password must contain at least 1 Special Character";
+        }
+        return ""; // No error
+    };
+
+    const handleConfirmPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setConfirmPassword(event.target.value);
+    };
+    const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+        const target = event.target as HTMLInputElement;
+        const inputValue = target.value;
+        const error = validatePassword(inputValue);
+        target.setCustomValidity(error); // Set the custom validity message
+    };
+
+    const handleInvalidInput = (event: React.FormEvent<HTMLInputElement>, errorMessage: string) => {
+        const target = event.target as HTMLInputElement;
+        target.setCustomValidity(errorMessage);
     };
 
 
@@ -51,6 +97,8 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                             id="newPassowrd"
                             name="newPassowrd"
                             className={getClassName("kcInputClass") + " form-control"}
+                            onInvalid={(e) => handleInvalidInput(e, 'Enter a Password')}
+                            onChange={handleBlur}
                             required
                             
                         />
@@ -73,6 +121,9 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                             id="confirmPassowrd"
                             name="confirmPassowrd"
                             className={getClassName("kcInputClass") + " form-control"}  
+                            value={confirmPassword}
+                            onChange={handleConfirmPasswordChange} 
+                            onInvalid={(e) => handleInvalidInput(e, 'Confirm your Password')}
                             required                         
                         />
                         <label htmlFor="confirmPassowrd" className={getClassName("kcLabelClass") + " floating-label"} >
