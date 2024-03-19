@@ -32,15 +32,15 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
     const [message, setMessage] = useState({ summary: "", type: "" });
 
     // Function to handle form submission
-    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        try {
-            await new Promise(resolve => setTimeout(resolve, 2000));
-            setMessage({ summary: "kindly check your email to reset your password.", type: "info" });
-        } catch (error) {
-            setMessage({ summary: "Password reset failed!", type: "error" });
-        }
-    };
+    // const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    //     event.preventDefault();
+    //     try {
+    //         await new Promise(resolve => setTimeout(resolve, 2000));
+    //         setMessage({ summary: "kindly check your email to reset your password.", type: "info" });
+    //     } catch (error) {
+    //         setMessage({ summary: "Password reset failed!", type: "error" });
+    //     }
+    // };
 
     return (
         <Template
@@ -57,7 +57,7 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
                     Forgot Password
                 </div>
             </div>
-            <form id="kc-reset-password-form" className={getClassName("kcFormClass")} action={url.loginAction} method="post" onSubmit={handleSubmit}>              
+            <form id="kc-reset-password-form" className={getClassName("kcFormClass")} action={url.loginAction} method="post">              
                 <div className={getClassName("kcFormGroupClass")}>
                     <div className="floating-label-group">
                         <input
