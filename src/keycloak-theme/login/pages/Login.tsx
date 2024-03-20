@@ -9,6 +9,9 @@ import logo from "../assets/logo.png"
 import microsoft from "../assets/microsoft.svg";
 import eyeicon from "../assets/eyeIcon.svg";
 import eyeiconInvisible from "../assets/eyeIconInvisible.svg";
+import type { TemplateProps } from "keycloakify/login/TemplateProps"; // Import TemplateProps type
+import { truncateSync } from "fs";
+
 
 const my_custom_param= new URL(window.location.href).searchParams.get("my_custom_param");
 
@@ -24,7 +27,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
         classes
     });
 
-    const { social, realm, url, usernameHidden, login, auth, registrationDisabled } = kcContext;
+    const { social, realm, url, usernameHidden, login, auth, registrationDisabled, message, isAppInitiatedAction } = kcContext;
 
     const { msg, msgStr } = i18n;
 
@@ -60,14 +63,13 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
         const isValidEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(target.value);
         target.setCustomValidity(isValidEmail ? '' : errorMessage);     
     };
-
+    const { displayMessage= true } = props;
     return (
         <Template
-            {...{ kcContext, i18n, doUseDefaultCss, classes }}
+            {...{ kcContext, i18n, doUseDefaultCss, classes}}
             displayInfo={social.displayInfo}
             displayWide={realm.password && social.providers !== undefined}
             headerNode={msg("doLogIn")}
-            
         >
 
           
@@ -166,7 +168,21 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                         </div>
                                     )}
                                 </div>                               
-                            </div>
+                            </div>                            
+                            {displayMessage && message !== undefined && (message.type !== "warning" || !isAppInitiatedAction) && (
+                                <div className= "top-center">
+                                    {message.type === "success" && <span className={getClassName("kcFeedbackSuccessIcon")}></span>}
+                                    {message.type === "warning" && <span className={getClassName("kcFeedbackWarningIcon")}></span>}
+                                    {message.type === "error" && <span className={getClassName("kcFeedbackErrorIcon")}></span>}
+                                    {message.type === "info" && <span className={getClassName("kcFeedbackInfoIcon")}></span>}
+                                    <span
+                                        className="kc-feedback-text"
+                                        dangerouslySetInnerHTML={{
+                                            "__html": message.summary
+                                        }} style={{ textAlign: 'center', margin:'0px 5px' }}
+                                    />
+                                </div>
+                            )}
                             <div id="kc-form-buttons" className={getClassName("kcFormGroupClass")} style={{ marginTop: '10px'}}>
                                 <input
                                     type="hidden"

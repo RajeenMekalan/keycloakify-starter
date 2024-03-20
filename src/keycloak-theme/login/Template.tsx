@@ -30,7 +30,7 @@ export default function Template(props: TemplateProps<KcContext, I18n> & { heigh
         doUseDefaultCss,
         classes,
         children,
-        height = '500px',
+        height = '550px',
         bottom = "0px"
     } = props;
 
@@ -68,7 +68,7 @@ export default function Template(props: TemplateProps<KcContext, I18n> & { heigh
         <div className={getClassName("kcLoginClass")}>
             
             {/* Validation Messages */}   
-            {displayMessage && message !== undefined && (message.type !== "warning" || !isAppInitiatedAction) && (
+            {/* {displayMessage && message !== undefined && (message.type !== "warning" || !isAppInitiatedAction) && (
                 <>
                     {message.type === "info" && (
                          <div className={showOverlayPopup ? "popup-overlay" : "hidden"}>
@@ -99,7 +99,7 @@ export default function Template(props: TemplateProps<KcContext, I18n> & { heigh
                         </div>
                     )}
                 </>
-            )}
+            )} */}
 
             <div className="middle-container">
                 {/* Left Side Container */}
@@ -118,7 +118,7 @@ export default function Template(props: TemplateProps<KcContext, I18n> & { heigh
                 <div className="right-side">
                     <div className={clsx(getClassName("kcFormCardClass"), displayWide && getClassName("kcFormCardAccountClass"))} style={{ width: '420px', height: height, borderRadius: '25px', marginBottom: bottom, padding:'40px'}}>
                         <div id="kc-content">
-                            <div id="kc-content-wrapper">                               
+                            <div id="kc-content-wrapper"> 
                                 {children}
                                 {auth !== undefined && auth.showTryAnotherWayLink && showAnotherWayIfPresent && (
                                     <form
