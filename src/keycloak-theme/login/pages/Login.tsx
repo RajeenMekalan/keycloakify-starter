@@ -8,6 +8,7 @@ import type { I18n } from "../i18n";
 import logo from "../assets/logo.png"
 import microsoft from "../assets/microsoft.svg";
 import eyeicon from "../assets/eyeIcon.svg";
+import eyeiconInvisible from "../assets/eyeIconInvisible.svg";
 
 const my_custom_param= new URL(window.location.href).searchParams.get("my_custom_param");
 
@@ -135,7 +136,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                         Password
                                     </label>
                                     <img
-                                        src={eyeicon}
+                                        src={isPasswordVisible ? eyeicon : eyeiconInvisible}
                                         alt="Toggle password visibility"
                                         className="password-toggle-icon"
                                         onClick={togglePasswordVisibility}

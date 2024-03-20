@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { useState } from "react";
 import eyeicon from "../assets/eyeIcon.svg";
+import eyeiconInvisible from "../assets/eyeIconInvisible.svg";
 
 export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, { pageId: "login-update-password.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
@@ -106,7 +107,7 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                             New Password
                         </label>
                         <img
-                            src={eyeicon}
+                            src={isPasswordVisible ? eyeicon : eyeiconInvisible}
                             alt="Toggle password visibility"
                             className="password-toggle-icon"
                             onClick={togglePasswordVisibility}
@@ -130,7 +131,7 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                             Confirm Password
                         </label>
                         <img
-                            src={eyeicon}
+                            src={isConfirmPasswordVisible ? eyeicon : eyeiconInvisible}
                             alt="Toggle password visibility"
                             className="password-toggle-icon"
                             onClick={toggleConfirmPasswordVisibility}
