@@ -32,15 +32,41 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
     const [message, setMessage] = useState({ summary: "", type: "" });
 
     // Function to handle form submission
-    // const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    //     event.preventDefault();
-    //     try {
-    //         await new Promise(resolve => setTimeout(resolve, 2000));
-    //         setMessage({ summary: "kindly check your email to reset your password.", type: "info" });
-    //     } catch (error) {
-    //         setMessage({ summary: "Password reset failed!", type: "error" });
-    //     }
-    // };
+    const handleSubmit1= async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        const actionUrl = url.loginAction;
+        try {
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            setMessage({ summary: "kindly check your email to reset your password.", type: "info" });
+        } catch (error) {
+            setMessage({ summary: "Password reset failed!", type: "error" });
+        }
+    };
+
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        try {
+
+            const response = await fetch(url.loginAction, {
+                method: 'POST',
+            });
+            console.log(response);
+            // Check if the request was successful
+            if (response.ok) {
+
+                // Handle successful response
+                setMessage({ summary: "Kindly check your email to reset your password.", type: "info" });
+                // Optionally, perform any additional actions upon successful submission
+            } else {
+                // Handle failed response
+                setMessage({ summary: "Password reset failed!", type: "error" });
+            }
+        } catch (error) {
+            // Handle any errors that occur during the request
+            setMessage({ summary: "An error occurred while processing your request.", type: "error" });
+            console.error('Error:', error);
+        }
+    };
 
     return (
         <Template
@@ -57,7 +83,7 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
                     Forgot Password
                 </div>
             </div>
-            <form id="kc-reset-password-form" className={getClassName("kcFormClass")} action={url.loginAction} method="post">              
+            <form id="kc-reset-password-form" className={getClassName("kcFormClass")} method="post" onSubmit={handleSubmit}>              
                 <div className={getClassName("kcFormGroupClass")}>
                     <div className="floating-label-group">
                         <input
