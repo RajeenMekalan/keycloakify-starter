@@ -5,6 +5,7 @@ import type { KcContext } from "../kcContext";
 import type { I18n } from "../i18n";
 import logo from "../assets/logo.png"
 import { useState } from "react";
+import { urlToHttpOptions } from "http";
 
 export default function LoginResetPassword(props: PageProps<Extract<KcContext, { pageId: "login-reset-password.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
@@ -14,9 +15,16 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
         classes
     });
 
-    const { url, realm, auth } = kcContext;
+    const { url, realm, auth,isAppInitiatedAction } = kcContext;
 
     const { msg, msgStr } = i18n;
+    const { displayMessage= true } = props;
+    const [showOverlayPopup, setShowOverlayPopup] = useState(true);
+
+    const handleDismiss = () => {
+        // Hide the overlay popup
+        setShowOverlayPopup(false);
+    };
 
     const handleInvalidInput = (event: React.FormEvent<HTMLInputElement>, errorMessage: string) => {
         const target = event.target as HTMLInputElement;
@@ -31,43 +39,6 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
 
     const [message, setMessage] = useState({ summary: "", type: "" });
 
-    // Function to handle form submission
-    const handleSubmit1= async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        const actionUrl = url.loginAction;
-        try {
-            await new Promise(resolve => setTimeout(resolve, 2000));
-            setMessage({ summary: "kindly check your email to reset your password.", type: "info" });
-        } catch (error) {
-            setMessage({ summary: "Password reset failed!", type: "error" });
-        }
-    };
-
-    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        try {
-
-            const response = await fetch(url.loginAction, {
-                method: 'POST',
-            });
-            console.log(response);
-            // Check if the request was successful
-            if (response.ok) {
-
-                // Handle successful response
-                setMessage({ summary: "Kindly check your email to reset your password.", type: "info" });
-                // Optionally, perform any additional actions upon successful submission
-            } else {
-                // Handle failed response
-                setMessage({ summary: "Password reset failed!", type: "error" });
-            }
-        } catch (error) {
-            // Handle any errors that occur during the request
-            setMessage({ summary: "An error occurred while processing your request.", type: "error" });
-            console.error('Error:', error);
-        }
-    };
-
     return (
         <Template
             {...{ kcContext, i18n, doUseDefaultCss, classes }}
@@ -77,13 +48,31 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
             height="350px" 
             bottom="100px"
         >
+            {displayMessage && message !== undefined && (message.type !== "warning" || !isAppInitiatedAction) && (
+                <>
+                    {message.type === "info" && (
+                         <div className={showOverlayPopup ? "popup-overlay" : "hidden"}>
+                         <div className="popup-content">                   
+                             <span style={{color:'#253053', fontSize:'16px'}}>Forgot Password</span>                  
+                             <p
+                                 className="kc-feedback-text"
+                                 dangerouslySetInnerHTML={{
+                                     "__html": message.summary
+                                 }} style={{ textAlign: 'center', margin:'10px 0px 10px' }}
+                             />
+                             <button onClick={handleDismiss} className="ok-button">OK</button>
+                         </div>
+                     </div>
+                    )}                    
+                </>
+            )}
             <div>
                 <img src={logo} style={{ width: '150px', height: '30px', marginRight: '10px', marginBottom: '20px' }} />
                 <div style={{ fontWeight: 400, fontSize: '25px', lineHeight: '40px', color: '#253053', textAlign: 'left', marginBottom: '20px' }}>
                     Forgot Password
                 </div>
             </div>
-            <form id="kc-reset-password-form" className={getClassName("kcFormClass")} method="post" onSubmit={handleSubmit}>              
+            <form id="kc-reset-password-form" className={getClassName("kcFormClass")} action={url.loginAction} method="post">              
                 <div className={getClassName("kcFormGroupClass")}>
                     <div className="floating-label-group">
                         <input
