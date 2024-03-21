@@ -5,8 +5,6 @@ import type { KcContext } from "../kcContext";
 import type { I18n } from "../i18n";
 import logo from "../assets/logo.png"
 import random from "../assets/Random.svg"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { useState } from "react";
 import eyeicon from "../assets/eyeIcon.svg";
 import eyeiconInvisible from "../assets/eyeIconInvisible.svg";
