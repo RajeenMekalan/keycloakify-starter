@@ -18,7 +18,6 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
     const { url, realm, auth,isAppInitiatedAction } = kcContext;
 
     const { msg, msgStr } = i18n;
-    const { displayMessage= true } = props;
     const [showOverlayPopup, setShowOverlayPopup] = useState(true);
 
     const handleDismiss = () => {
@@ -48,24 +47,6 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
             height="350px" 
             bottom="100px"
         >
-            {displayMessage && message !== undefined && (message.type !== "warning" || !isAppInitiatedAction) && (
-                <>
-                    {message.type === "info" && (
-                         <div className={showOverlayPopup ? "popup-overlay" : "hidden"}>
-                         <div className="popup-content">                   
-                             <span style={{color:'#253053', fontSize:'16px'}}>Forgot Password</span>                  
-                             <p
-                                 className="kc-feedback-text"
-                                 dangerouslySetInnerHTML={{
-                                     "__html": message.summary
-                                 }} style={{ textAlign: 'center', margin:'10px 0px 10px' }}
-                             />
-                             <button onClick={handleDismiss} className="ok-button">OK</button>
-                         </div>
-                     </div>
-                    )}                    
-                </>
-            )}
             <div>
                 <img src={logo} style={{ width: '150px', height: '30px', marginRight: '10px', marginBottom: '20px' }} />
                 <div style={{ fontWeight: 400, fontSize: '25px', lineHeight: '40px', color: '#253053', textAlign: 'left', marginBottom: '20px' }}>

@@ -15,7 +15,9 @@ export const { useI18n } = createUseI18n({
         invalidUsernameMessage : "Enter a valid username.",
         invalidUsernameOrEmailMessage : "Invalid username or email.",
         invalidPasswordMessage : "Enter a valid password.",
-        invalidEmailMessage : "Enter a valid Email Address"
+        invalidEmailMessage : "Enter a valid Email Address",
+        emailSentMessage:"kindly check your email to reset your password.",
+        expiredActionTokenNoSessionMessage: "Your password reset link has been expired."
     },
     fr: {
         /* spell-checker: disable */
@@ -26,7 +28,9 @@ export const { useI18n } = createUseI18n({
         invalidUsernameMessage : "Invalid username.",
         invalidUsernameOrEmailMessage : "Invalid username or email.",
         invalidPasswordMessage : "Invalid password.",
-        invalidEmailMessage : "Invalid email address."
+        invalidEmailMessage : "Invalid email address.",
+        emailSentMessage:"kindly check your email to reset your password.",
+        expiredActionTokenNoSessionMessage: "Your password reset link has been expired."
         /* spell-checker: enable */
     }
 });

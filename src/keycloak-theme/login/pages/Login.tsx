@@ -64,6 +64,20 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
         target.setCustomValidity(isValidEmail ? '' : errorMessage);     
     };
     const { displayMessage= true } = props;
+
+    function getMessageColorClass(messageType: string): string {
+        switch (messageType) {
+            case "info":
+                return "info-color";
+            case "error":
+                return "error-color";
+            case "success":
+                return "success-color";
+            default:
+                return "";
+        }
+    }
+    
     return (
         <Template
             {...{ kcContext, i18n, doUseDefaultCss, classes}}
@@ -182,7 +196,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                         }} style={{ textAlign: 'center', margin:'0px 5px' }}
                                     />
                                 </div>
-                            )}
+                            )}                          
                             <div id="kc-form-buttons" className={getClassName("kcFormGroupClass")} style={{ marginTop: '10px'}}>
                                 <input
                                     type="hidden"
