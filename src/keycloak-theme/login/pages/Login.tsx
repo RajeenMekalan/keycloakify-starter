@@ -179,7 +179,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                         className="kc-feedback-text"
                                         dangerouslySetInnerHTML={{
                                             "__html": message.summary
-                                        }} style={{ textAlign: 'center', margin:'0px 5px' }}
+                                        }} style={{ textAlign: 'center', margin:'0px 5px', color: message.type === "success" ? '#03C40B' : message.type === "error" ? '#FA1C1C' : 'inherit' }}
                                     />
                                 </div>
                             )}

@@ -150,24 +150,9 @@
 
 }
 
-
-/* .top-center {
-    top: 10px;
-    left: 50%;
-    background-color: #ffffff;
-    padding: 5px;
-    border-radius: 8px;
-	text-align: center;
-    font-size:13px;
-    font-weight: 400;
-    color: red;
-    height:30px;
-} */
-
 .top-center {
     background-color: #fff;
     border-radius: 8px;
-    color: #1f1f1f;
     font-size: 13px;
     line-height: 18px;
     font-weight: 400;
