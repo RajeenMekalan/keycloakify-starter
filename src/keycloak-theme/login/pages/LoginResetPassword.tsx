@@ -18,7 +18,6 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
     const { url, realm, auth } = kcContext;
 
     const { msg, msgStr } = i18n;
-    const { displayMessage= true } = props;
     const [showOverlayPopup, setShowOverlayPopup] = useState(true);
 
     const handleDismiss = () => {
@@ -42,7 +41,7 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
     return (
         <Template
             {...{ kcContext, i18n, doUseDefaultCss, classes }}
-            displayMessage={true}
+            displayMessage={false}
             headerNode={msg("emailForgotTitle")} 
             infoNode={msg("emailInstruction")}
             height="350px" 
