@@ -36,6 +36,37 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
     const toggleConfirmPasswordVisibility = () => {
         setConfirmPasswordVisible(!isConfirmPasswordVisible);
     };
+
+  const generatePasswordAndFill = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault(); // Prevent default form submission behavior
+    
+    let generatedPassword = ""; // Initialize an empty string for the generated password
+    
+    // Generate a password that meets the specified criteria
+    do {
+      generatedPassword = generateRandomPassword(); // Generate a random password
+    } while (!validatePassword(generatedPassword)); // Continue generating until the password meets the criteria
+    
+    // Set the generated password to both password and confirm password fields
+    setPassword(generatedPassword);
+    setConfirmPassword(generatedPassword);
+  };
+  
+  const generateRandomPassword = (): string => {
+    // Define the characters to be used in the password
+    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+";
+  
+    let password = "";
+    const passwordLength = 10; // Change this to your desired password length
+  
+    // Generate random characters to form the password
+    for (let i = 0; i < passwordLength; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      password += characters[randomIndex];
+    }
+  
+    return password;
+  };
     
     const validatePassword = (password: string): string => {
         // Password must contain minimum of 8 characters
@@ -139,6 +170,7 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                 type={isPasswordVisible ? "text" : "password"}
                 id="password-new"
                 name="password-new"
+                value={password}
                 className={getClassName("kcInputClass") + " form-control"}
                 onInvalid={(e) => handleInvalidInput(e, "Enter a Password")}
                 onChange={handleBlur}
@@ -232,6 +264,7 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                 getClassName("kcButtonLargeClass")
               )}
               type="submit"
+              onClick={generatePasswordAndFill}
               style={{
                 borderRadius: "6px",
                 fontSize: "14px",
