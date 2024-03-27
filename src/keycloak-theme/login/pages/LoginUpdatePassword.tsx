@@ -3,10 +3,8 @@ import type { PageProps } from "keycloakify/login/pages/PageProps";
 import { useGetClassName } from "keycloakify/login/lib/useGetClassName";
 import type { KcContext } from "../kcContext";
 import type { I18n } from "../i18n";
-import logo from "../assets/logo.png"
-import random from "../assets/Random.svg"
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import logo from "../assets/logo.png";
+import random from "../assets/Random.svg";
 import { useState } from "react";
 import eyeicon from "../assets/eyeIcon.svg";
 import eyeiconInvisible from "../assets/eyeIconInvisible.svg";
@@ -19,16 +17,15 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
         classes
     });
 
-    const { url, realm, auth , username} = kcContext;
+    const { url, realm, auth , username, isAppInitiatedAction} = kcContext;
 
     const { msg, msgStr } = i18n;
-    
+
     const [isPasswordVisible , setPasswordVisible] = useState(false);
     const [isConfirmPasswordVisible , setConfirmPasswordVisible] = useState(false);
     const [password, setPassword] = useState("");
+    const [newPassword,setNewPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    const [passwordError, setPasswordError] = useState("");
-    const [confirmPasswordError, setConfirmPasswordError] = useState("");
 
     const togglePasswordVisibility = () => {
         setPasswordVisible(!isPasswordVisible);
@@ -40,35 +37,54 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
 
   const generatePasswordAndFill = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault(); // Prevent default form submission behavior
-    
+
     let generatedPassword = ""; // Initialize an empty string for the generated password
-    
+
     // Generate a password that meets the specified criteria
     do {
       generatedPassword = generateRandomPassword(); // Generate a random password
-    } while (!validatePassword(generatedPassword)); // Continue generating until the password meets the criteria
-    
+    } while (validatePassword(generatedPassword) !== ""); // Continue generating until the password meets the criteria
+
     // Set the generated password to both password and confirm password fields
-    setPassword(generatedPassword);
+    setNewPassword(generatedPassword);
     setConfirmPassword(generatedPassword);
   };
-  
+
   const generateRandomPassword = (): string => {
-    // Define the characters to be used in the password
-    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+";
+    const lowercaseChars = 'abcdefghijklmnopqrstuvwxyz';
+    const uppercaseChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const numbers = '0123456789';
+    const specialChars = '!@#$%^&*()_+-=[]{}|;:,.<>?';
   
-    let password = "";
-    const passwordLength = 10; // Change this to your desired password length
+    const getRandomChar = (chars: string): string => {
+      return chars.charAt(Math.floor(Math.random() * chars.length));
+    };
   
-    // Generate random characters to form the password
-    for (let i = 0; i < passwordLength; i++) {
-      const randomIndex = Math.floor(Math.random() * characters.length);
-      password += characters[randomIndex];
+    let password = '';
+  
+    // Generate a random number between 8 and 10 inclusive for the password length
+    const passwordLength = Math.floor(Math.random() * 3) + 8;
+  
+    // Ensure at least 1 of each required character type
+    password += getRandomChar(lowercaseChars); // 1 lowercase
+    password += getRandomChar(uppercaseChars); // 1 uppercase
+    password += getRandomChar(numbers); // 1 number
+    password += getRandomChar(numbers); // 1 number
+    password += getRandomChar(specialChars); // 1 special character
+  
+    // Fill the rest of the password with random characters
+    for (let i = 5; i < passwordLength; i++) {
+      const chars = lowercaseChars + uppercaseChars + specialChars;
+      password += getRandomChar(chars);
     }
+  
+    // Shuffle the password to randomize the order
+    password = password.split('').sort(() => Math.random() - 0.5).join('');
   
     return password;
   };
-    
+  
+
     const validatePassword = (password: string): string => {
         // Password must contain minimum of 8 characters
         if (password.length < 8) {
@@ -98,15 +114,13 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
     };
 
     const handleConfirmPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const confirmPasswordValue = event.target.value;
-        setConfirmPassword(confirmPasswordValue);
-
-        if (confirmPasswordValue !== password) {
-          const target = event.target as HTMLInputElement;
-          const error = "Passwords do not match";
-        target.setCustomValidity(error);
+      const confirmPasswordValue = event.target.value;
+      setConfirmPassword(confirmPasswordValue);
+    
+      if (confirmPasswordValue === newPassword) {
+        event.target.setCustomValidity('');
       } else {
-          setConfirmPasswordError("");
+        event.target.setCustomValidity('Passwords do not match');
       }
     };
 
@@ -118,8 +132,8 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
     const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       const target = event.target as HTMLInputElement;
       const error = validatePassword(event.target.value);
-      setPassword(event.target.value);
-      target.setCustomValidity(error); 
+      setNewPassword(event.target.value);
+      target.setCustomValidity(error);
   };
 
     return (
@@ -175,12 +189,12 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
           />
 
           <div className={getClassName("kcFormGroupClass")}>
-            <div className="floating-label-group">             
+            <div className="floating-label-group">
               <input
                 type={isPasswordVisible ? "text" : "password"}
                 id="password-new"
                 name="password-new"
-                value={password}
+                value={newPassword}
                 className={getClassName("kcInputClass") + " form-control"}
                 onChange={handlePasswordChange}
                 required
@@ -244,7 +258,7 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
               />
             </div>
           </div>
-          <div id="kc-form-buttons">
+          {/* <div id="kc-form-buttons">
             <input
               className={clsx(
                 getClassName("kcButtonClass"),
@@ -260,7 +274,72 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                 color: "#FFFFFF",
               }}
             />
+          </div> */}
+
+          <div>
+            <div id="kc-form-options" className={getClassName("kcFormOptionsClass")}>
+              <div className={getClassName("kcFormOptionsWrapperClass")}>
+                {isAppInitiatedAction && (
+                  <div className="checkbox">
+                    <label>
+                      <input type="checkbox" id="logout-sessions" name="logout-sessions" value="on" checked />
+                      {msgStr("logoutOtherSessions")}
+                    </label>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div id="kc-form-buttons">
+              {isAppInitiatedAction ? (
+                <>
+                  <input
+                    className={clsx(
+                      getClassName("kcButtonClass"),
+                      //getClassName("kcButtonPrimaryClass"),
+                      getClassName("kcButtonLargeClass")
+                    )}
+                    type="submit"
+                    defaultValue={msgStr("doSubmit")}
+                    style={{
+                      backgroundColor: "#2C82F9",
+                      borderRadius: "6px",
+                      color: "#FFFFFF",
+                    }}
+                  />
+                  <button
+                    className={clsx(
+                      getClassName("kcButtonClass"),
+                      getClassName("kcButtonDefaultClass"),
+                      getClassName("kcButtonLargeClass")
+                    )}
+                    type="submit"
+                    name="cancel-aia"
+                    value="true"
+                  >
+                    {msg("doCancel")}
+                  </button>
+                </>
+              ) : (
+                <input
+                  className={clsx(
+                    getClassName("kcButtonClass"),
+                    //getClassName("kcButtonPrimaryClass"),
+                    getClassName("kcButtonBlockClass"),
+                    getClassName("kcButtonLargeClass")
+                  )}
+                  type="submit"
+                  value="Reset Password"
+                  style={{
+                    backgroundColor: "#2C82F9",
+                    borderRadius: "6px",
+                    color: "#FFFFFF",
+                  }}
+                />
+              )}
+            </div>
           </div>
+
           <div className="separator" style={{ marginTop: "30px" }}>
             <span style={{ fontSize: "14px", color: "#8C8C8C" }}>or</span>
           </div>
