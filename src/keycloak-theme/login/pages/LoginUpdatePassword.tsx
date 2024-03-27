@@ -28,6 +28,7 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [passwordError, setPasswordError] = useState("");
+    const [confirmPasswordError, setConfirmPasswordError] = useState("");
 
     const togglePasswordVisibility = () => {
         setPasswordVisible(!isPasswordVisible);
@@ -97,13 +98,16 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
     };
 
     const handleConfirmPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setConfirmPassword(event.target.value);
-    };
-    const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-        const target = event.target as HTMLInputElement;
-        const inputValue = target.value;
-        const error = validatePassword(inputValue);
-        target.setCustomValidity(error); // Set the custom validity message
+        const confirmPasswordValue = event.target.value;
+        setConfirmPassword(confirmPasswordValue);
+
+        if (confirmPasswordValue !== password) {
+          const target = event.target as HTMLInputElement;
+          const error = "Passwords do not match";
+        target.setCustomValidity(error);
+      } else {
+          setConfirmPasswordError("");
+      }
     };
 
     const handleInvalidInput = (event: React.FormEvent<HTMLInputElement>, errorMessage: string) => {
@@ -111,6 +115,12 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
         target.setCustomValidity(errorMessage);
     };
 
+    const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const target = event.target as HTMLInputElement;
+      const error = validatePassword(event.target.value);
+      setPassword(event.target.value);
+      target.setCustomValidity(error); 
+  };
 
     return (
       <Template
@@ -165,15 +175,14 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
           />
 
           <div className={getClassName("kcFormGroupClass")}>
-            <div className="floating-label-group">
+            <div className="floating-label-group">             
               <input
                 type={isPasswordVisible ? "text" : "password"}
                 id="password-new"
                 name="password-new"
                 value={password}
                 className={getClassName("kcInputClass") + " form-control"}
-                onInvalid={(e) => handleInvalidInput(e, "Enter a Password")}
-                onChange={handleBlur}
+                onChange={handlePasswordChange}
                 required
               />
               <label
@@ -209,9 +218,9 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                 className={getClassName("kcInputClass") + " form-control"}
                 value={confirmPassword}
                 onChange={handleConfirmPasswordChange}
-                onInvalid={(e) =>
-                  handleInvalidInput(e, "Confirm your Password")
-                }
+                // onInvalid={(e) =>
+                //   handleInvalidInput(e, "Confirm your Password")
+                // }
                 required
               />
               <label
