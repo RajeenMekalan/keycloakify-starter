@@ -258,7 +258,7 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
               />
             </div>
           </div>
-          {/* <div id="kc-form-buttons">
+          <div id="kc-form-buttons">
             <input
               className={clsx(
                 getClassName("kcButtonClass"),
@@ -274,9 +274,9 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                 color: "#FFFFFF",
               }}
             />
-          </div> */}
+          </div>
 
-          <div>
+          {/* <div>
             <div id="kc-form-options" className={getClassName("kcFormOptionsClass")}>
               <div className={getClassName("kcFormOptionsWrapperClass")}>
                 {isAppInitiatedAction && (
@@ -338,7 +338,8 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                 />
               )}
             </div>
-          </div>
+            
+          </div> */}
 
           <div className="separator" style={{ marginTop: "30px" }}>
             <span style={{ fontSize: "14px", color: "#8C8C8C" }}>or</span>
