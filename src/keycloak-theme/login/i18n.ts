@@ -16,7 +16,7 @@ export const { useI18n } = createUseI18n({
         invalidUsernameOrEmailMessage : "Invalid username or email.",
         invalidPasswordMessage : "Enter a valid password.",
         invalidEmailMessage : "Enter a valid Email Address",
-        emailSentMessage: "kindly check your email to reset your password.",
+        emailSentMessage: "Kindly check your email to reset your password.",
         expiredActionTokenNoSessionMessage: "Your password reset link has been expired."
     },
     fr: {

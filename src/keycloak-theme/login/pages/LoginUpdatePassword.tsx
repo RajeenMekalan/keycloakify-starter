@@ -5,35 +5,50 @@ import type { KcContext } from "../kcContext";
 import type { I18n } from "../i18n";
 import logo from "../assets/logo.png";
 import random from "../assets/Random.svg";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import eyeicon from "../assets/eyeIcon.svg";
+import copyicon from "../assets/copyIcon.svg";
 import eyeiconInvisible from "../assets/eyeIconInvisible.svg";
 
 export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, { pageId: "login-update-password.ftl" }>, I18n>) {
-    const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
+  const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
+  const { getClassName } = useGetClassName({
+    doUseDefaultCss,
+    classes
+  });
+  const { url, realm, auth, username, isAppInitiatedAction } = kcContext;
+  const { msg, msgStr } = i18n;
+  const passwordRef = useRef<HTMLInputElement | null>(null);
+  const passwordConfirmRef = useRef<HTMLInputElement | null>(null);
+  const [isPasswordVisible, setPasswordVisible] = useState(false);
+  const [isConfirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+  const [password, setPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
-    const { getClassName } = useGetClassName({
-        doUseDefaultCss,
-        classes
-    });
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!isPasswordVisible);
+  };
 
-    const { url, realm, auth , username, isAppInitiatedAction} = kcContext;
+  const toggleConfirmPasswordVisibility = () => {
+    setConfirmPasswordVisible(!isConfirmPasswordVisible);
+  };
 
-    const { msg, msgStr } = i18n;
+  const togglePasswordCopy = () => {
+    const input = passwordRef.current;
+    if (input) {
+      input.select();
+      document.execCommand("copy");
+    }
+  };
 
-    const [isPasswordVisible , setPasswordVisible] = useState(false);
-    const [isConfirmPasswordVisible , setConfirmPasswordVisible] = useState(false);
-    const [password, setPassword] = useState("");
-    const [newPassword,setNewPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
-
-    const togglePasswordVisibility = () => {
-        setPasswordVisible(!isPasswordVisible);
-    };
-
-    const toggleConfirmPasswordVisibility = () => {
-        setConfirmPasswordVisible(!isConfirmPasswordVisible);
-    };
+  const togglePasswordCopyConfirm = () => {
+    const input = passwordConfirmRef.current;
+    if (input) {
+      input.select();
+      document.execCommand("copy");
+    }
+  };
 
   const generatePasswordAndFill = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault(); // Prevent default form submission behavior
@@ -55,85 +70,107 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
     const uppercaseChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     const numbers = '0123456789';
     const specialChars = '!@#$%^&*()_+-=[]{}|;:,.<>?';
-  
+
     const getRandomChar = (chars: string): string => {
       return chars.charAt(Math.floor(Math.random() * chars.length));
     };
-  
+
     let password = '';
-  
+
     // Generate a random number between 8 and 10 inclusive for the password length
     const passwordLength = Math.floor(Math.random() * 3) + 8;
-  
+
     // Ensure at least 1 of each required character type
     password += getRandomChar(lowercaseChars); // 1 lowercase
     password += getRandomChar(uppercaseChars); // 1 uppercase
     password += getRandomChar(numbers); // 1 number
     password += getRandomChar(numbers); // 1 number
     password += getRandomChar(specialChars); // 1 special character
-  
+
     // Fill the rest of the password with random characters
     for (let i = 5; i < passwordLength; i++) {
       const chars = lowercaseChars + uppercaseChars + specialChars;
       password += getRandomChar(chars);
     }
-  
+
     // Shuffle the password to randomize the order
     password = password.split('').sort(() => Math.random() - 0.5).join('');
-  
+
     return password;
   };
-  
 
-    const validatePassword = (password: string): string => {
-        // Password must contain minimum of 8 characters
-        if (password.length < 8) {
-            return "Password must contain minimum of 8 characters";
-        }
-        // Password must contain maximum of 10 characters
-        if (password.length > 10) {
-            return "Password must contain maximum of 10 characters";
-        }
-        // Password must contain at least 1 lowercase character
-        if (!/[a-z]/.test(password)) {
-            return "Password must contain at least 1 lowercase character";
-        }
-        // Password must contain at least 1 uppercase character
-        if (!/[A-Z]/.test(password)) {
-            return "Password must contain at least 1 uppercase character";
-        }
-        // Password must contain at least 2 numbers
-        if ((password.match(/\d/g) || []).length < 2) {
-            return "Password must contain at least 2 numbers";
-        }
-        // Password must contain at least 1 Special Character
-        if (!/[^a-zA-Z0-9]/.test(password)) {
-            return "Password must contain at least 1 Special Character";
-        }
-        return ""; // No error
-    };
 
-    const handleConfirmPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      const confirmPasswordValue = event.target.value;
-      setConfirmPassword(confirmPasswordValue);
-    
-      if (confirmPasswordValue === newPassword) {
-        event.target.setCustomValidity('');
-      } else {
-        event.target.setCustomValidity('Passwords do not match');
-      }
-    };
+  const validatePassword = (password: string): string => {
+    // Password must contain minimum of 8 characters
+    if (password.length < 8) {
+      return "Password must contain minimum of 8 characters";
+    }
+    // Password must contain maximum of 10 characters
+    if (password.length > 10) {
+      return "Password must contain maximum of 10 characters";
+    }
+    // Password must contain at least 1 lowercase character
+    if (!/[a-z]/.test(password)) {
+      return "Password must contain at least 1 lowercase character";
+    }
+    // Password must contain at least 1 uppercase character
+    if (!/[A-Z]/.test(password)) {
+      return "Password must contain at least 1 uppercase character";
+    }
+    // Password must contain at least 2 numbers
+    if ((password.match(/\d/g) || []).length < 2) {
+      return "Password must contain at least 2 numbers";
+    }
+    // Password must contain at least 1 Special Character
+    if (!/[^a-zA-Z0-9]/.test(password)) {
+      return "Password must contain at least 1 Special Character";
+    }
+    return ""; // No error
+  };
 
-    const handleInvalidInput = (event: React.FormEvent<HTMLInputElement>, errorMessage: string) => {
-        const target = event.target as HTMLInputElement;
-        target.setCustomValidity(errorMessage);
-    };
+  const handleConfirmPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const confirmPasswordValue = event.target.value;
+    setConfirmPassword(confirmPasswordValue);
 
-    const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      const target = event.target as HTMLInputElement;
-      const error = validatePassword(event.target.value);
-      setNewPassword(event.target.value);
-      target.setCustomValidity(error);
+    if (confirmPasswordValue === newPassword) {
+      event.target.setCustomValidity('');
+    } else {
+      event.target.setCustomValidity('Passwords do not match');
+    }
+  };
+
+  const handleInvalidInput = (event: React.FormEvent<HTMLInputElement>, errorMessage: string) => {
+    const target = event.target as HTMLInputElement;
+    let error = "";
+    if (target.value.trim() === "") {
+        error = errorMessage;
+    } else {
+        error = validatePassword(target.value);
+        setNewPassword(target.value);
+    }
+    target.setCustomValidity(error);
+};
+
+  const handleInvalidInputConfirm = (event: React.FormEvent<HTMLInputElement>, errorMessage: string) => {
+    const target = event.target as HTMLInputElement;
+    const confirmPasswordValue = target.value;
+    setConfirmPassword(confirmPasswordValue);
+
+    if (target.value.trim() === "") {
+      target.setCustomValidity(errorMessage);
+  } 
+    else if (confirmPasswordValue === newPassword) {
+      target.setCustomValidity('');
+    } else {
+      target.setCustomValidity('Passwords do not match');
+    }
+  };
+
+  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const target = event.target as HTMLInputElement;
+    const error = validatePassword(event.target.value);
+    setNewPassword(event.target.value);
+    target.setCustomValidity(error);
   };
 
     return (
@@ -196,7 +233,9 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                 name="password-new"
                 value={newPassword}
                 className={getClassName("kcInputClass") + " form-control"}
+                onInvalid={(e) => handleInvalidInput(e, 'Enter a password')}
                 onChange={handlePasswordChange}
+                ref={passwordRef}
                 required
               />
               <label
@@ -218,6 +257,21 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                   transform: "translateY(-50%)",
                 }}
               />
+              <img
+                src={copyicon}
+                alt="Copy Password"
+                className="password-toggle-icon"
+                onClick={togglePasswordCopy}
+                style={{
+                  cursor: "pointer",
+                  position: "absolute",
+                  right: "40px",
+                  top: "50%",
+                  transform: "translateY(-50%)", 
+                  width:"24px",
+                  height:"15px",
+                }}
+              />
             </div>
           </div>
           <div
@@ -232,9 +286,10 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                 className={getClassName("kcInputClass") + " form-control"}
                 value={confirmPassword}
                 onChange={handleConfirmPasswordChange}
-                // onInvalid={(e) =>
-                //   handleInvalidInput(e, "Confirm your Password")
-                // }
+                onInvalid={(e) =>
+                  handleInvalidInputConfirm(e, "Confirm your Password")
+                }
+                ref={passwordConfirmRef}
                 required
               />
               <label
@@ -256,6 +311,21 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                   transform: "translateY(-50%)",
                 }}
               />
+              <img
+                src={copyicon}
+                alt="Copy Password"
+                className="password-toggle-icon"
+                onClick={togglePasswordCopyConfirm}
+                style={{
+                  cursor: "pointer",
+                  position: "absolute",
+                  right: "40px",
+                  top: "50%",
+                  transform: "translateY(-50%)", 
+                  width:"24px",
+                  height:"15px",
+                }}
+              />
             </div>
           </div>
           <div id="kc-form-buttons">
@@ -275,71 +345,6 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
               }}
             />
           </div>
-
-          {/* <div>
-            <div id="kc-form-options" className={getClassName("kcFormOptionsClass")}>
-              <div className={getClassName("kcFormOptionsWrapperClass")}>
-                {isAppInitiatedAction && (
-                  <div className="checkbox">
-                    <label>
-                      <input type="checkbox" id="logout-sessions" name="logout-sessions" value="on" checked />
-                      {msgStr("logoutOtherSessions")}
-                    </label>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            <div id="kc-form-buttons">
-              {isAppInitiatedAction ? (
-                <>
-                  <input
-                    className={clsx(
-                      getClassName("kcButtonClass"),
-                      //getClassName("kcButtonPrimaryClass"),
-                      getClassName("kcButtonLargeClass")
-                    )}
-                    type="submit"
-                    defaultValue={msgStr("doSubmit")}
-                    style={{
-                      backgroundColor: "#2C82F9",
-                      borderRadius: "6px",
-                      color: "#FFFFFF",
-                    }}
-                  />
-                  <button
-                    className={clsx(
-                      getClassName("kcButtonClass"),
-                      getClassName("kcButtonDefaultClass"),
-                      getClassName("kcButtonLargeClass")
-                    )}
-                    type="submit"
-                    name="cancel-aia"
-                    value="true"
-                  >
-                    {msg("doCancel")}
-                  </button>
-                </>
-              ) : (
-                <input
-                  className={clsx(
-                    getClassName("kcButtonClass"),
-                    //getClassName("kcButtonPrimaryClass"),
-                    getClassName("kcButtonBlockClass"),
-                    getClassName("kcButtonLargeClass")
-                  )}
-                  type="submit"
-                  value="Reset Password"
-                  style={{
-                    backgroundColor: "#2C82F9",
-                    borderRadius: "6px",
-                    color: "#FFFFFF",
-                  }}
-                />
-              )}
-            </div>
-            
-          </div> */}
 
           <div className="separator" style={{ marginTop: "30px" }}>
             <span style={{ fontSize: "14px", color: "#8C8C8C" }}>or</span>
