@@ -50,7 +50,7 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
             <div>
                 <img src={logo} style={{ width: '150px', height: '30px', marginRight: '10px', marginBottom: '20px' }} />
                 <div style={{ fontWeight: 400, fontSize: '25px', lineHeight: '40px', color: '#253053', textAlign: 'left', marginBottom: '20px' }}>
-                    Forgot Password
+                    Forgot Password?
                 </div>
             </div>
             <form id="kc-reset-password-form" className={getClassName("kcFormClass")} action={url.loginAction} method="post">              

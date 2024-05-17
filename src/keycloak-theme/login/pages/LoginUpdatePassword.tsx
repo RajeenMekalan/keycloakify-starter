@@ -25,6 +25,9 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [isGeneratedPassword, setIsGeneratedPassword] = useState(false);
+  const [showCopyIcon, setShowCopyIcon] = useState(false);
+  const [showCopyIconConfirm, setShowCopyIconConfirm] = useState(false);
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!isPasswordVisible);
@@ -63,6 +66,9 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
     // Set the generated password to both password and confirm password fields
     setNewPassword(generatedPassword);
     setConfirmPassword(generatedPassword);
+    setIsGeneratedPassword(true); 
+    setShowCopyIcon(true); // Show the copy icon for password field
+    setShowCopyIconConfirm(true);
   };
 
   const generateRandomPassword = (): string => {
@@ -135,7 +141,7 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
     if (confirmPasswordValue === newPassword) {
       event.target.setCustomValidity('');
     } else {
-      event.target.setCustomValidity('Passwords do not match');
+      event.target.setCustomValidity('Passwords not matching. Try again');
     }
   };
 
@@ -162,7 +168,7 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
     else if (confirmPasswordValue === newPassword) {
       target.setCustomValidity('');
     } else {
-      target.setCustomValidity('Passwords do not match');
+      target.setCustomValidity('Passwords not matching. Try again');
     }
   };
 
@@ -236,6 +242,7 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                 onInvalid={(e) => handleInvalidInput(e, 'Enter a password')}
                 onChange={handlePasswordChange}
                 ref={passwordRef}
+                readOnly={isGeneratedPassword}
                 required
               />
               <label
@@ -257,7 +264,8 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                   transform: "translateY(-50%)",
                 }}
               />
-              <img
+              {showCopyIcon && (
+                <img
                 src={copyicon}
                 alt="Copy Password"
                 className="password-toggle-icon"
@@ -272,6 +280,8 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                   height:"15px",
                 }}
               />
+              )}
+              
             </div>
           </div>
           <div
@@ -287,9 +297,10 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                 value={confirmPassword}
                 onChange={handleConfirmPasswordChange}
                 onInvalid={(e) =>
-                  handleInvalidInputConfirm(e, "Confirm your Password")
+                  handleInvalidInputConfirm(e, "Confirm Your Password")
                 }
                 ref={passwordConfirmRef}
+                readOnly={isGeneratedPassword}
                 required
               />
               <label
@@ -311,7 +322,8 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                   transform: "translateY(-50%)",
                 }}
               />
-              <img
+              {showCopyIconConfirm && (
+                <img
                 src={copyicon}
                 alt="Copy Password"
                 className="password-toggle-icon"
@@ -326,6 +338,7 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                   height:"15px",
                 }}
               />
+              )}         
             </div>
           </div>
           <div id="kc-form-buttons">
